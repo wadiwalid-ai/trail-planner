@@ -1,0 +1,189 @@
+entrypoint = "README.md"
+modules = ["nodejs-22", "python-3.11", "postgresql-16"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["freetype", "glibcLocales"]
+
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["sh", "-c", "npm run expo:static:build && npm run server:build"]
+run = ["npm", "run", "server:prod"]
+
+[[ports]]
+localPort = 5000
+externalPort = 5000
+
+[[ports]]
+localPort = 8081
+externalPort = 80
+
+[[ports]]
+localPort = 8082
+externalPort = 3000
+
+[[ports]]
+localPort = 23636
+externalPort = 3002
+
+[env]
+PORT = "5000"
+
+[agent]
+stack = "EXPO"
+integrations = ["javascript_openai_ai_integrations:2.0.0", "javascript_anthropic_ai_integrations:2.0.0"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start App"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test:trail-line-tap"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test:trail-line-bridge"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test:host-bridge"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test:ai-waypoints-auth"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test-ai-summary-auth"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test:waypoint-write-auth"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test:last-admin-guard"
+
+[[workflows.workflow]]
+name = "Start App"
+author = "agent"
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start Backend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start Frontend"
+
+[[workflows.workflow]]
+name = "Start Backend"
+author = "agent"
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run server:dev"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Start Frontend"
+author = "agent"
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run expo:dev"
+waitForPort = 8081
+ensurePreviewReachable = "/status"
+
+[[workflows.workflow]]
+name = "test:trail-line-tap"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx tsx tests/trailLineTap.test.ts"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "test:trail-line-bridge"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx tsx tests/trailLineBridge.test.ts"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "test:host-bridge"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "TSX_TSCONFIG_PATH=tests/tsconfig.json npx tsx tests/adventureMapHostBridge.test.tsx"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "test:ai-waypoints-auth"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx tsx tests/aiWaypointsAuth.test.ts"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "test-ai-summary-auth"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx tsx tests/aiSummaryAuth.test.ts"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "test:waypoint-write-auth"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx tsx tests/waypointWriteAuth.test.ts"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "test:last-admin-guard"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx tsx tests/lastAdminGuard.test.ts"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 180000
