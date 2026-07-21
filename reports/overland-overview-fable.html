@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Overland — Product Overview</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+
+@page { size: A4; margin: 17mm 16mm; }
+@page cover { margin: 0; }
+
+*{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+html,body{ margin:0; padding:0; }
+:root{
+  --ink:#1a1712; --charcoal:#2b261d; --paper:#FBF7EF; --paper2:#F4ECDD; --sand:#E7D9BC;
+  --line:#E4DAC6; --line2:#D6C9AE; --ember:#C0611E; --ember2:#8f4614; --dune:#6E5433;
+  --muted:#8a7f69; --good:#3E6B4F; --warn:#A9781E; --bad:#A23B2C;
+}
+body{ font-family:"Inter",system-ui,Arial,sans-serif; color:var(--ink); font-size:10.5px; line-height:1.62; background:var(--paper); }
+h1,h2,h3,h4{ font-family:"Fraunces","Georgia",serif; color:var(--charcoal); margin:0; font-weight:600; letter-spacing:-0.01em; }
+p{ margin:0 0 9px; }
+b,strong{ font-weight:600; color:var(--ink); }
+.mut{ color:var(--muted); }
+.kicker{ font-family:"Inter",sans-serif; font-size:8.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--ember); }
+.num{ font-variant-numeric:tabular-nums; }
+
+/* ── COVER ─────────────────────────────────────────── */
+.cover{ page:cover; page-break-after:always; position:relative; width:210mm; height:297mm; overflow:hidden; background:#1a1712; }
+.cover img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.cover .scrim{ position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(20,17,12,.55) 0%, rgba(20,17,12,0) 26%, rgba(20,17,12,0) 44%, rgba(20,17,12,.72) 80%, rgba(20,17,12,.95) 100%); }
+.cover .inner{ position:absolute; inset:0; padding:20mm 18mm; display:flex; flex-direction:column; justify-content:space-between; color:#F6EEDE; }
+.wordmark{ display:flex; align-items:center; gap:10px; }
+.wordmark .dot{ width:9px; height:9px; border-radius:50%; background:var(--ember); box-shadow:0 0 0 4px rgba(192,97,30,.28); }
+.wordmark .wm{ font-family:"Fraunces",serif; font-weight:600; font-size:15px; letter-spacing:.18em; text-transform:uppercase; color:#fff; }
+.wordmark .div{ flex:1; height:1px; background:rgba(246,238,222,.35); margin-left:6px; }
+.wordmark .conf{ font-size:8px; letter-spacing:.22em; text-transform:uppercase; color:#e7d3ad; }
+.cover h1{ color:#fff; font-size:46px; line-height:1.04; font-weight:600; max-width:15cm; text-shadow:0 2px 24px rgba(0,0,0,.4); }
+.cover .kick2{ font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--ember); margin-bottom:14px; font-weight:700; }
+.cover .sub{ font-size:14px; line-height:1.5; color:#f0e5d1; max-width:14.5cm; margin-top:16px; }
+.cover .rule{ width:64px; height:3px; background:var(--ember); margin:22px 0 0; }
+.cover .meta{ display:flex; justify-content:space-between; align-items:flex-end; font-size:9.5px; color:#e9dcc0; border-top:1px solid rgba(246,238,222,.28); padding-top:14px; }
+.cover .meta b{ color:#fff; font-weight:600; }
+
+/* ── SECTIONS ──────────────────────────────────────── */
+.opener{ page-break-before:always; padding-top:2mm; }
+.opener .head{ display:flex; align-items:baseline; gap:16px; border-bottom:1.5px solid var(--charcoal); padding-bottom:10px; margin-bottom:14px; }
+.opener .no{ font-family:"Fraunces",serif; font-weight:600; font-size:40px; line-height:.8; color:var(--sand); }
+.opener .htxt .kicker{ margin-bottom:3px; display:block; }
+.opener h2{ font-size:23px; line-height:1.05; }
+.lede{ font-family:"Fraunces",serif; font-size:14.5px; line-height:1.5; color:var(--dune); font-weight:400; margin:0 0 14px; max-width:16.5cm; }
+.lede.i{ font-style:italic; }
+
+.cols{ display:flex; gap:18px; }
+.cols > *{ flex:1; }
+.col3{ display:flex; gap:14px; }
+.col3 > *{ flex:1; }
+
+h3.sub{ font-size:13px; margin:16px 0 6px; }
+.eyebrow{ font-size:8px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+
+/* stats */
+.stats{ display:flex; gap:12px; margin:14px 0 6px; }
+.stat{ flex:1; border-top:2px solid var(--ember); padding-top:8px; }
+.stat b{ font-family:"Fraunces",serif; font-size:24px; font-weight:600; color:var(--charcoal); display:block; line-height:1; }
+.stat span{ font-size:8.5px; color:var(--muted); letter-spacing:.02em; display:block; margin-top:5px; text-transform:uppercase; }
+
+/* tables */
+table{ width:100%; border-collapse:collapse; margin:10px 0 6px; font-size:9.5px; }
+thead th{ text-align:left; font-weight:600; font-size:8.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted); border-bottom:1.5px solid var(--charcoal); padding:0 9px 7px; }
+tbody td{ padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+tbody tr:last-child td{ border-bottom:1.5px solid var(--line2); }
+th.r,td.r{ text-align:right; font-variant-numeric:tabular-nums; }
+th.c,td.c{ text-align:center; }
+.hl{ background:var(--paper2); }
+td .strong{ font-weight:600; }
+.g{ color:var(--good); font-weight:600; } .w{ color:var(--warn); font-weight:600; } .r-{ color:var(--bad); font-weight:600; }
+.pill{ display:inline-block; padding:1.5px 8px; border-radius:20px; font-size:8px; font-weight:700; letter-spacing:.04em; }
+.pill.g{ background:#e6f0e9; color:var(--good);} .pill.y{ background:#f6ecd6; color:var(--warn);} .pill.r{ background:#f6e2dd; color:var(--bad);}
+.tick{ font-weight:700; } .tick.g{ color:var(--good);} .tick.w{ color:var(--warn);} .tick.x{ color:#bcae94;}
+
+/* callout / quote */
+.callout{ border-left:3px solid var(--ember); background:var(--paper2); padding:11px 15px; margin:12px 0; border-radius:0 6px 6px 0; }
+.callout.g{ border-color:var(--good); background:#eaf3ee; }
+.callout.r{ border-color:var(--bad); background:#f7e9e5; }
+.callout .lb{ font-size:8px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ember); display:block; margin-bottom:3px; }
+.callout.g .lb{ color:var(--good);} .callout.r .lb{ color:var(--bad);}
+.quote{ font-family:"Fraunces",serif; font-style:italic; font-size:18px; line-height:1.35; color:var(--charcoal); border-top:1px solid var(--line2); border-bottom:1px solid var(--line2); padding:16px 0; margin:16px 0; text-align:center; }
+.quote b{ color:var(--ember2); font-weight:600; font-style:normal; }
+
+.card{ border:1px solid var(--line); border-radius:9px; padding:13px 15px; background:#fff; }
+.card .tag{ font-size:8px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ember); }
+.card h3{ font-size:14px; margin:2px 0 5px; }
+.card .price{ font-size:9px; color:var(--dune); font-weight:600; margin:4px 0 6px; }
+.card .ln{ font-size:9px; margin:3px 0; line-height:1.5; }
+.card .ln .mini{ font-size:7.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--good); }
+.card .ln.bad .mini{ color:var(--bad); }
+.card.reco{ background:var(--charcoal); color:#f3ead9; border:none; }
+.card.reco h3, .card.reco .tag{ color:#fff; } .card.reco .tag{ color:var(--sand);} .card.reco .mut{ color:#c9bda3; }
+
+/* ordered moves */
+ol.moves{ margin:6px 0; padding:0; counter-reset:m; list-style:none; }
+ol.moves > li{ position:relative; padding:0 0 11px 34px; margin:0 0 11px; border-bottom:1px solid var(--line); }
+ol.moves > li:last-child{ border-bottom:none; }
+ol.moves > li::before{ counter-increment:m; content:counter(m); position:absolute; left:0; top:-1px;
+  font-family:"Fraunces",serif; font-weight:600; font-size:16px; color:var(--ember); width:24px; text-align:center; }
+ol.moves .note{ display:block; margin-top:5px; font-size:9px; color:var(--muted); line-height:1.55; border-left:2px solid var(--line2); padding-left:9px; }
+
+/* moat stack diagram */
+.stack{ display:flex; flex-direction:column; gap:6px; margin:14px 0; }
+.stack .lyr{ display:flex; align-items:center; gap:12px; border:1px solid var(--line); border-radius:8px; padding:9px 13px; background:#fff; }
+.stack .lyr .n{ font-family:"Fraunces",serif; font-weight:600; font-size:15px; color:var(--sand); width:20px; text-align:center; flex-shrink:0; }
+.stack .lyr .t{ flex:1; }
+.stack .lyr .t b{ font-size:10.5px; display:block; }
+.stack .lyr .t span{ font-size:8.8px; color:var(--muted); }
+.stack .lyr .time{ font-size:8px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:20px; flex-shrink:0; }
+.stack .lyr.l1{ border-left:3px solid var(--bad); } .stack .lyr.l1 .time{ background:#f6e2dd; color:var(--bad); }
+.stack .lyr.l2{ border-left:3px solid var(--warn); } .stack .lyr.l2 .time{ background:#f6ecd6; color:var(--warn); }
+.stack .lyr.l3{ border-left:3px solid var(--good); } .stack .lyr.l3 .time{ background:#e6f0e9; color:var(--good); }
+.stack .lyr.l4{ border-left:3px solid var(--ember); background:var(--charcoal); } .stack .lyr.l4 .t b,.stack .lyr.l4 .t span{ color:#f3ead9; } .stack .lyr.l4 .time{ background:var(--ember); color:#fff; }
+
+.fig{ margin:8px 0 4px; }
+.figcap{ font-size:8.5px; color:var(--muted); margin-top:6px; letter-spacing:.02em; }
+.foot{ margin-top:16px; border-top:1px solid var(--line); padding-top:9px; font-size:8.2px; color:var(--muted); line-height:1.6; }
+.foot b{ color:var(--dune); }
+svg{ display:block; }
+.avoid{ page-break-inside:avoid; }
+.theme-swatches{ display:flex; gap:10px; margin:10px 0; }
+.theme-swatches .sw{ flex:1; border-radius:8px; overflow:hidden; border:1px solid var(--line); }
+.theme-swatches .sw .top{ height:34px; }
+.theme-swatches .sw .bot{ padding:7px 9px; background:#fff; }
+.theme-swatches .sw .bot b{ font-size:9px; display:block; } .theme-swatches .sw .bot span{ font-size:7.8px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ════════ COVER ════════ -->
+<section class="cover">
+  <img src="file:///home/runner/workspace/attached_assets/generated_images/overland-cover.png" alt="Overland desert trail at dusk" />
+  <div class="scrim"></div>
+  <div class="inner">
+    <div class="wordmark">
+      <span class="dot"></span><span class="wm">Overland</span><span class="div"></span><span class="conf">Prepared for Fable · Anthropic</span>
+    </div>
+    <div>
+      <div class="kick2">Product Overview &amp; Defensibility Brief</div>
+      <h1>Off-grid overlanding,<br/>built to be trusted<br/>where signal ends.</h1>
+      <div class="sub">What Overland does, how it's designed, the AI decisions behind it — and the honest answer to the hardest question: what stops someone from copying this in a weekend.</div>
+      <div class="rule"></div>
+    </div>
+    <div class="meta">
+      <div>Prepared by the <b>Founder &amp; Product Desk</b><br/>App overview · design rationale · moat &amp; defensibility</div>
+      <div style="text-align:right">For Fable · Anthropic<br/><b>July 2026</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 00 WHAT THIS IS ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">00</div>
+    <div class="htxt"><span class="kicker">The elevator pitch</span><h2>Overland is a safety-first companion for driving where the map runs out.</h2></div>
+  </div>
+  <p class="lede">Not a social trail app. A tool built for the moment cell signal disappears, the trail forks, or someone gets stuck — and for the years of driving before and after that moment.</p>
+
+  <div class="cols">
+    <div>
+      <p>Overland is a mobile app (iOS/Android/web, built on Expo/React Native) for people who drive off paved roads: desert overlanders in the UAE, and 4x4 / overland communities more broadly. It does four things well:</p>
+      <ol class="moves">
+        <li><b>Find and plan trails</b> — a curated + community + OpenStreetMap trail library, browsable on an interactive offline-capable map, with an AI trip planner that turns "3 days, stock Land Cruiser, family-friendly" into a real itinerary.
+          <span class="note">Every trail carries real technical data: distance, elevation gain, surface, difficulty — not marketing copy.</span>
+        </li>
+        <li><b>Record and understand your own drives</b> — GPS + telemetry recording that becomes a shareable community trail, with AI-generated trip summaries and auto-suggested waypoints (scenic, technical, summit) pulled from the actual sensor data.</li>
+        <li><b>Track your group live, off-grid</b> — "Convoy": live positions, speed, and status (moving / stopped / stuck / need-help) for everyone in your group, with recovery guidance when someone gets stuck.</li>
+        <li><b>Stay findable when it matters</b> — an SOS flow, offline Plus Codes, and a safety panel that works with zero signal, because the worst time to need a location fix is exactly when you have no bars.</li>
+      </ol>
+    </div>
+    <div style="max-width:6.4cm">
+      <div class="stats">
+        <div class="stat"><b>4</b><span>Visual themes</span></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>5</b><span>Core app tabs</span></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>3</b><span>Trail data sources</span></div>
+      </div>
+      <div class="callout" style="margin-top:14px">
+        <span class="lb">Who it's for, first</span>
+        UAE desert overlanders — a community where a wrong turn or a stuck vehicle at 45°C is a genuine safety event, not an inconvenience. Safety is the wedge; everything else follows from it.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 01 WHAT IT DOES ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">01</div>
+    <div class="htxt"><span class="kicker">Product tour</span><h2>Five tabs, one trip.</h2></div>
+  </div>
+  <p class="lede i">Every screen maps to a real moment in a drive — before, during, or after.</p>
+
+  <table>
+    <thead><tr><th>Tab / screen</th><th>What it does</th><th class="c">Status</th></tr></thead>
+    <tbody>
+      <tr><td><b>Explore</b></td><td>Map-first discovery of trails — curated favorites, community-recorded routes, and OpenStreetMap-sourced 4x4 tracks for the UAE, Moab, and Colorado, filterable by difficulty and surface.</td><td class="c"><span class="pill g">Live</span></td></tr>
+      <tr><td><b>AI Planner</b></td><td>Describe the trip in plain language (vehicle, days, group, experience level); Claude generates a structured, terrain-aware itinerary.</td><td class="c"><span class="pill g">Live</span></td></tr>
+      <tr><td><b>Record</b></td><td>Real-time GPS + telemetry recording, waypoint dropping, and media capture while driving; recordings become community trails.</td><td class="c"><span class="pill g">Live</span></td></tr>
+      <tr><td><b>My Trips</b></td><td>Saved plans and recorded tracks, synced to your account across devices; AI-written trip summaries and auto-tagged difficulty.</td><td class="c"><span class="pill g">Live</span></td></tr>
+      <tr><td><b>Convoy</b></td><td>Create or join a live group; see everyone's position, heading, speed and status on the map in real time.</td><td class="c"><span class="pill g">Live</span></td></tr>
+      <tr><td><b>Offline Maps</b></td><td>Download a region's map tiles before you lose signal, with honest storage estimates and safety ceilings so a download can't eat someone's phone.</td><td class="c"><span class="pill g">Live</span></td></tr>
+      <tr><td><b>Account / Admin</b></td><td>Auth, theme selection, cloud sync settings; an admin panel with role management and an audit log for the small team running the platform.</td><td class="c"><span class="pill g">Live</span></td></tr>
+    </tbody>
+  </table>
+  <p class="mut" style="font-size:8.8px;margin-top:2px">"Live" means built and working in the current app today — not a mockup or a roadmap item. The one area still native-build-only (not yet in Expo Go / web) is 3D terrain rendering and true offline vector map packs — see §02.</p>
+</section>
+
+<!-- ════════ 02 DESIGN CHOICES ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">02</div>
+    <div class="htxt"><span class="kicker">Design philosophy</span><h2>Every design choice traces back to one job: work when it's hot, bright, and you have one hand on the wheel.</h2></div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h3 class="sub">Four themes, not one brand</h3>
+      <p>Overland ships four complete visual identities — Dune, Overland, Apex, Horizon — each with its own palette, hero photography treatment, and typography weighting, all built on one shared component system (<span class="mut">ThemeContext</span>, persisted per-user).</p>
+      <div class="theme-swatches">
+        <div class="sw"><div class="top" style="background:linear-gradient(135deg,#C0611E,#8f4614)"></div><div class="bot"><b>Dune</b><span>Warm ember / sand</span></div></div>
+        <div class="sw"><div class="top" style="background:linear-gradient(135deg,#3E6B4F,#2b4a38)"></div><div class="bot"><b>Overland</b><span>Deep field green</span></div></div>
+        <div class="sw"><div class="top" style="background:linear-gradient(135deg,#2b261d,#1a1712)"></div><div class="bot"><b>Apex</b><span>Charcoal / performance</span></div></div>
+        <div class="sw"><div class="top" style="background:linear-gradient(135deg,#A9781E,#6E5433)"></div><div class="bot"><b>Horizon</b><span>Golden hour</span></div></div>
+      </div>
+      <p class="mut" style="font-size:9px"><b>Why:</b> off-road culture is not one aesthetic — a Wrangler crawler club and a Land Cruiser desert convoy don't want the same app to look identical. Letting the community pick an identity costs nothing extra to build once the token system exists, and it turns the app into something people are proud to have on their home screen.</p>
+    </div>
+    <div>
+      <h3 class="sub">Editorial typography, not "startup UI"</h3>
+      <p>Headlines and hero moments use a serif (Fraunces) against a clean sans body (Inter) — the same pairing used in this document. It reads more like a well-made outdoor magazine than a SaaS dashboard.</p>
+      <p class="mut" style="font-size:9px"><b>Why:</b> the category is full of utilitarian, spreadsheet-like map apps. A magazine-grade visual bar signals "this was made by people who actually go off-road," which matters more in this niche than in most consumer categories — credibility is the entire sale.</p>
+      <h3 class="sub">Honesty over hype in every safety surface</h3>
+      <p>The Safety Panel shows exact coordinates in two formats plus offline Plus Codes; the SOS button pre-fills a real SMS with real coordinates and queues it if there's no signal instead of pretending it sent. Offline map downloads show a real, calibrated size estimate and a hard ceiling (1.2GB / 45,000 tiles) rather than an optimistic guess.</p>
+      <p class="mut" style="font-size:9px"><b>Why:</b> in a safety context, a UI that lies confidently is worse than one that says "I don't know." Every safety-adjacent screen is designed to fail loudly and honestly, never silently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 03 THE AI LAYER ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">03</div>
+    <div class="htxt"><span class="kicker">Where Claude fits</span><h2>AI as a deterministic co-pilot, not a fortune teller.</h2></div>
+  </div>
+  <p class="lede">Every text-generation feature in the app runs on <b>Claude Sonnet 4.6</b> via Anthropic's API. We made one deliberate, non-obvious call early on that shapes all of it: <b>reactive AI, never predictive</b>.</p>
+
+  <div class="cols">
+    <div>
+      <h3 class="sub">What's built today</h3>
+      <table>
+        <thead><tr><th>Feature</th><th>What Claude does</th></tr></thead>
+        <tbody>
+          <tr><td><b>AI Trip Planner</b></td><td>Turns vehicle + duration + group + terrain preferences into a structured, day-by-day markdown itinerary.</td></tr>
+          <tr><td><b>Recovery co-pilot</b></td><td>"TrailMaster" persona — a stuck-vehicle assistant that asks structured questions (surface, angle, gear, solo-or-group) and walks the driver through a recovery.</td></tr>
+          <tr><td><b>Track summaries</b></td><td>Reads a recorded drive's telemetry and writes a readable trip report with an assessed difficulty rating.</td></tr>
+          <tr><td><b>Waypoint suggestions</b></td><td>Flags likely scenic / technical / summit waypoints from altitude peaks and speed variance in the raw GPS log.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="callout r">
+        <span class="lb">What we deliberately rejected</span>
+        Predictive hazard AI — "you'll likely lose a vehicle over that ridge." We tested this idea internally and killed it. Desert terrain shifts (dunes migrate metres per year) and most trails are unmapped at useful resolution — a wrong safety prediction is worse than no prediction at all, and erodes trust in every other feature.
+      </div>
+      <div class="callout g">
+        <span class="lb">What we kept instead</span>
+        Arithmetic on live GPS/mesh data — separation distance, no-movement duration, out-of-range alerts — is not "prediction," it's measurement. Fully deterministic, fully explainable, and it's the backbone of Convoy's status indicators.
+      </div>
+      <p class="mut" style="font-size:9px">We think this is the more interesting Claude story to tell: not "we bolted on AI everywhere," but "we drew a hard line about where language-model judgment belongs versus where it doesn't," and Claude sits precisely on the right side of that line — interpreting language and structuring guidance, never inventing facts about terrain it can't verify.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 04 THE MOAT ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">04</div>
+    <div class="htxt"><span class="kicker">The honest answer</span><h2>The app is not the moat. We designed it knowing that.</h2></div>
+  </div>
+  <p class="lede i">In the vibe-coding era, any single screen of this app could be rebuilt in a weekend. So the defensibility can't live in the code — it has to live in what the code accumulates over time.</p>
+
+  <div class="stack avoid">
+    <div class="lyr l1">
+      <div class="n">1</div>
+      <div class="t"><b>The app / UI</b><span>Screens, themes, navigation — genuinely cloneable fast with today's AI coding tools.</span></div>
+      <div class="time">~1 weekend</div>
+    </div>
+    <div class="lyr l2">
+      <div class="n">2</div>
+      <div class="t"><b>Trail &amp; feature logic</b><span>OSM sync, recording pipeline, AI prompt design — takes real engineering time, but is still a solved-problem space.</span></div>
+      <div class="time">~1–3 months</div>
+    </div>
+    <div class="lyr l3">
+      <div class="n">3</div>
+      <div class="t"><b>Deployed hardware + mesh density</b><span>A LoRa communicator in enough vehicles that Convoy actually works off-grid — this requires supply chain, a device business, and physical distribution.</span></div>
+      <div class="time">~1–2 years</div>
+    </div>
+    <div class="lyr l4">
+      <div class="n">4</div>
+      <div class="t"><b>Compounding data + community trust</b><span>Every drive recorded by a real vehicle refines the terrain model and the recovery knowledge base a little more. A competitor starting today starts at zero — and can never buy their way to "years of real drives."</span></div>
+      <div class="time">Compounds forever</div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h3 class="sub">Living 3D terrain — the clearest example</h3>
+      <p>We start from GEDTM30, the best free 30m bare-earth global elevation model (CC BY 4.0, commercially usable). That's the same public data anyone can download. What no one else has: every recorded drive is a sensor pass — GPS + barometer for a relative elevation profile, phone IMU for pitch (grade) and roll (off-camber) — and enough passes over time refine a crowd-built terrain model no static dataset can match, especially over dune fields that migrate metres per year.</p>
+      <p class="mut" style="font-size:9px"><b>Sourcing rule:</b> "buy the mountains, crowdsource the sand" — we'd license commercial high-resolution DEM only for stable terrain (mountains, wadis, rock) where it stays accurate for years; dune fields are refreshed by the community because paying to survey terrain the wind rewrites every season is money wasted.</p>
+    </div>
+    <div>
+      <h3 class="sub">The recovery knowledge base — the second example</h3>
+      <p>Every real stuck-vehicle recovery, with what actually worked, by terrain type and vehicle — curated and weighted by verified experienced marshals — becomes a retrieval knowledge base Claude draws on. This is proprietary field data that cannot be scraped, licensed, or reproduced by a competitor without years of the same real-world usage.</p>
+      <p class="mut" style="font-size:9px">We use retrieval over this knowledge base rather than fine-tuning a model on it — safer, auditable, and avoids hallucinating recovery advice, which in this context is a safety issue, not a quality issue.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 05 DIFFERENTIATORS ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">05</div>
+    <div class="htxt"><span class="kicker">Versus the field</span><h2>Where the incumbents are strong, and where they're not even trying.</h2></div>
+  </div>
+  <p class="lede">onX Offroad and Gaia GPS dominate globally on trail data breadth in the US. Neither has a real off-grid group-safety product, and neither is meaningfully present in Middle East desert overlanding — the exact terrain where signal loss and heat make safety features matter most.</p>
+
+  <table>
+    <thead><tr><th>Capability</th><th class="c">onX / Gaia GPS</th><th class="c">Generic trail apps</th><th class="c">Overland</th></tr></thead>
+    <tbody>
+      <tr><td>Offline trail maps</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">partial</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td>Live off-grid group tracking</td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td>Reactive AI recovery guidance</td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td>AI trip planning from plain language</td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td>Desert / dune-specific terrain data strategy</td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td>UAE / MENA community presence</td><td class="c"><span class="tick x">minimal</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">First mover</span></td></tr>
+      <tr><td>Hardware-funded, subscription-aligned model</td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">✓ (planned)</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="quote">"Fight the global leaders worldwide and it's a knife fight. Win the desert first — where they're barely showing up —<b>then</b> expand."</div>
+</section>
+
+<!-- ════════ 06 WHY IT CAN'T BE COPIED ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">06</div>
+    <div class="htxt"><span class="kicker">The direct question</span><h2>"Couldn't someone just clone this?"</h2></div>
+  </div>
+  <div class="cols">
+    <div>
+      <p><b>Yes — the app.</b> We're not pretending otherwise; that's why this whole brief is built around the layers beneath the app.</p>
+      <p><b>No — the fleet.</b> Convoy's value is a function of how many vehicles around you are running the hardware. A clone launching today has zero deployed devices and zero network effect; density has to be earned, one vehicle and one club at a time.</p>
+      <p><b>No — the data.</b> A crowd-refined terrain model and a verified recovery knowledge base are outputs of real usage over real time. There's no shortcut, no dataset to buy, no scrape target — the only way to get it is to have been running the product for years already.</p>
+    </div>
+    <div>
+      <p><b>No — the trust.</b> Safety products live or die on community trust, especially with a marshal-verification layer gatekeeping data quality. That trust is a brand and relationship asset built through actual desert meetups and club relationships, not a feature flag.</p>
+      <p><b>No — the economics.</b> A subscription-funded free hardware model (the WHOOP playbook) requires getting unit economics, churn, and device cost right simultaneously — a genuinely hard operating problem, not a design decision a clone can copy by looking at screenshots.</p>
+      <div class="callout" style="margin-top:8px"><span class="lb">In one line</span>Anyone can copy what the app <i>looks like</i> in a weekend. Nobody can copy what it <i>knows</i>, who trusts it, or how many vehicles are already running it — without doing the same years of work we're doing right now.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 07 CLOSING ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">07</div>
+    <div class="htxt"><span class="kicker">Why this is worth Fable's time</span><h2>An honest build, and a real relationship with the model underneath it.</h2></div>
+  </div>
+  <p class="lede">Claude Sonnet 4.6 already sits at the center of the two features that matter most to users under stress — the trip planner people rely on before they lose signal, and the recovery co-pilot they open after something's gone wrong. We'd welcome the chance to go deeper: on-device or lower-latency options for the recovery flow when connectivity is marginal, retrieval patterns for the marshal-verified knowledge base as it grows, and multimodal handling for the photo/voice stuck-reports drivers send from the field.</p>
+  <div class="callout g">
+    <span class="lb">Where we are</span>
+    Every feature described in this brief is live in the current build — not a deck of intentions. The hardware/mesh layer and the terrain data pipeline are the next builds, and where we'd most value Anthropic's counsel as we design the AI surface around them honestly, the same way we've tried to design everything else.
+  </div>
+  <div class="foot">
+    Prepared for Fable, Anthropic · Overland Product &amp; Design Desk · July 2026<br/>
+    <b>Confidential</b> — shared for partnership discussion; contains unreleased product and data-strategy detail.
+  </div>
+</section>
+
+</body>
+</html>
