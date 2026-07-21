@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Overland — Commercial Field Brief</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+
+@page { size: A4; margin: 17mm 16mm; }
+@page cover { margin: 0; }
+
+*{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+html,body{ margin:0; padding:0; }
+:root{
+  --ink:#1a1712; --charcoal:#2b261d; --paper:#FBF7EF; --paper2:#F4ECDD; --sand:#E7D9BC;
+  --line:#E4DAC6; --line2:#D6C9AE; --ember:#C0611E; --ember2:#8f4614; --dune:#6E5433;
+  --muted:#8a7f69; --good:#3E6B4F; --warn:#A9781E; --bad:#A23B2C;
+}
+body{ font-family:"Inter",system-ui,Arial,sans-serif; color:var(--ink); font-size:10.5px; line-height:1.62; background:var(--paper); }
+h1,h2,h3,h4{ font-family:"Fraunces","Georgia",serif; color:var(--charcoal); margin:0; font-weight:600; letter-spacing:-0.01em; }
+p{ margin:0 0 9px; }
+b,strong{ font-weight:600; color:var(--ink); }
+.mut{ color:var(--muted); }
+.kicker{ font-family:"Inter",sans-serif; font-size:8.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--ember); }
+.num{ font-variant-numeric:tabular-nums; }
+
+/* ── COVER ─────────────────────────────────────────── */
+.cover{ page:cover; page-break-after:always; position:relative; width:210mm; height:297mm; overflow:hidden; background:#1a1712; }
+.cover img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.cover .scrim{ position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(20,17,12,.55) 0%, rgba(20,17,12,0) 26%, rgba(20,17,12,0) 46%, rgba(20,17,12,.72) 82%, rgba(20,17,12,.94) 100%); }
+.cover .inner{ position:absolute; inset:0; padding:20mm 18mm; display:flex; flex-direction:column; justify-content:space-between; color:#F6EEDE; }
+.wordmark{ display:flex; align-items:center; gap:10px; }
+.wordmark .dot{ width:9px; height:9px; border-radius:50%; background:var(--ember); box-shadow:0 0 0 4px rgba(192,97,30,.28); }
+.wordmark .wm{ font-family:"Fraunces",serif; font-weight:600; font-size:15px; letter-spacing:.18em; text-transform:uppercase; color:#fff; }
+.wordmark .div{ flex:1; height:1px; background:rgba(246,238,222,.35); margin-left:6px; }
+.wordmark .conf{ font-size:8px; letter-spacing:.22em; text-transform:uppercase; color:#e7d3ad; }
+.cover h1{ color:#fff; font-size:46px; line-height:1.02; font-weight:600; max-width:15cm; text-shadow:0 2px 24px rgba(0,0,0,.4); }
+.cover .kick2{ font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--ember); margin-bottom:14px; font-weight:700; }
+.cover .sub{ font-size:14px; line-height:1.5; color:#f0e5d1; max-width:14.5cm; margin-top:16px; }
+.cover .rule{ width:64px; height:3px; background:var(--ember); margin:22px 0 0; }
+.cover .meta{ display:flex; justify-content:space-between; align-items:flex-end; font-size:9.5px; color:#e9dcc0; border-top:1px solid rgba(246,238,222,.28); padding-top:14px; }
+.cover .meta b{ color:#fff; font-weight:600; }
+
+/* ── SECTIONS ──────────────────────────────────────── */
+.opener{ page-break-before:always; padding-top:2mm; }
+.opener .head{ display:flex; align-items:baseline; gap:16px; border-bottom:1.5px solid var(--charcoal); padding-bottom:10px; margin-bottom:14px; }
+.opener .no{ font-family:"Fraunces",serif; font-weight:600; font-size:40px; line-height:.8; color:var(--sand); -webkit-text-stroke:0; }
+.opener .htxt .kicker{ margin-bottom:3px; display:block; }
+.opener h2{ font-size:23px; line-height:1.05; }
+.lede{ font-family:"Fraunces",serif; font-size:14.5px; line-height:1.5; color:var(--dune); font-weight:400; margin:0 0 14px; max-width:16.5cm; }
+.lede.i{ font-style:italic; }
+
+.cols{ display:flex; gap:18px; }
+.cols > *{ flex:1; }
+.col3{ display:flex; gap:14px; }
+.col3 > *{ flex:1; }
+
+h3.sub{ font-size:13px; margin:16px 0 6px; }
+.eyebrow{ font-size:8px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+
+/* stats */
+.stats{ display:flex; gap:12px; margin:14px 0 6px; }
+.stat{ flex:1; border-top:2px solid var(--ember); padding-top:8px; }
+.stat b{ font-family:"Fraunces",serif; font-size:26px; font-weight:600; color:var(--charcoal); display:block; line-height:1; }
+.stat span{ font-size:8.5px; color:var(--muted); letter-spacing:.02em; display:block; margin-top:5px; text-transform:uppercase; }
+
+/* tables */
+table{ width:100%; border-collapse:collapse; margin:10px 0 6px; font-size:9.5px; }
+thead th{ text-align:left; font-weight:600; font-size:8.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted); border-bottom:1.5px solid var(--charcoal); padding:0 9px 7px; }
+tbody td{ padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+tbody tr:last-child td{ border-bottom:1.5px solid var(--line2); }
+th.r,td.r{ text-align:right; font-variant-numeric:tabular-nums; }
+.hl{ background:var(--paper2); }
+td .strong{ font-weight:600; }
+.g{ color:var(--good); font-weight:600; } .w{ color:var(--warn); font-weight:600; } .r-{ color:var(--bad); font-weight:600; }
+.pill{ display:inline-block; padding:1.5px 8px; border-radius:20px; font-size:8px; font-weight:700; letter-spacing:.04em; }
+.pill.g{ background:#e6f0e9; color:var(--good);} .pill.y{ background:#f6ecd6; color:var(--warn);} .pill.r{ background:#f6e2dd; color:var(--bad);}
+
+/* callout / quote */
+.callout{ border-left:3px solid var(--ember); background:var(--paper2); padding:11px 15px; margin:12px 0; border-radius:0 6px 6px 0; }
+.callout.g{ border-color:var(--good); background:#eaf3ee; }
+.callout.r{ border-color:var(--bad); background:#f7e9e5; }
+.callout .lb{ font-size:8px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ember); display:block; margin-bottom:3px; }
+.callout.g .lb{ color:var(--good);} .callout.r .lb{ color:var(--bad);}
+.quote{ font-family:"Fraunces",serif; font-style:italic; font-size:18px; line-height:1.35; color:var(--charcoal); border-top:1px solid var(--line2); border-bottom:1px solid var(--line2); padding:16px 0; margin:16px 0; text-align:center; }
+.quote b{ color:var(--ember2); font-weight:600; font-style:normal; }
+
+.card{ border:1px solid var(--line); border-radius:9px; padding:13px 15px; background:#fff; }
+.card .tag{ font-size:8px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ember); }
+.card.reco{ background:var(--charcoal); color:#f3ead9; border:none; }
+.card.reco h3, .card.reco .tag{ color:#fff; } .card.reco h3{ color:#fff; }
+.card.reco .tag{ color:var(--sand);} .card.reco .mut{ color:#c9bda3; }
+
+.fig{ margin:8px 0 4px; }
+.figcap{ font-size:8.5px; color:var(--muted); margin-top:6px; letter-spacing:.02em; }
+.foot{ margin-top:16px; border-top:1px solid var(--line); padding-top:9px; font-size:8.2px; color:var(--muted); line-height:1.55; }
+svg{ display:block; }
+.avoid{ page-break-inside:avoid; }
+</style>
+</head>
+<body>
+
+<!-- ════════ COVER ════════ -->
+<section class="cover">
+  <img src="file:///home/runner/workspace/attached_assets/generated_images/overland-cover.png" alt="Desert dunes at dusk" />
+  <div class="scrim"></div>
+  <div class="inner">
+    <div class="wordmark">
+      <span class="dot"></span><span class="wm">Overland</span><span class="div"></span><span class="conf">Confidential · Internal</span>
+    </div>
+    <div>
+      <div class="kick2">Commercial Field Brief</div>
+      <h1>Making money off the grid.</h1>
+      <div class="sub">How to price the platform — <b style="color:#fff">with</b> a bundled off-grid device, and <b style="color:#fff">without</b> one. The moat, the model, the numbers, and the one risk that decides whether "free device" is genius or a money pit.</div>
+      <div class="rule"></div>
+    </div>
+    <div class="meta">
+      <div>Prepared by the <b>Commercial &amp; Design Desk</b><br/>Strategy &amp; unit economics · connected-hardware subscriptions</div>
+      <div style="text-align:right">For the Founder<br/><b>July 2026</b> · v2</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 01 THESIS ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">01</div>
+    <div class="htxt"><span class="kicker">The thesis</span><h2>The app is the hook. The system is the business.</h2></div>
+  </div>
+  <p class="lede">Anyone can build a beautiful trail app in a weekend now. What they cannot build in a weekend is a fleet of devices in the desert, a mesh that gets denser every trip, and a library of real recoveries that no competitor has. That is the company. The app just gets people in the door.</p>
+
+  <div class="cols">
+    <div>
+      <p><b>The wedge is safety, not maps.</b> Overlanders in the Empty Quarter don't lose sleep over which trail is prettiest — they worry about losing a vehicle in a convoy where there is no signal for 200&nbsp;km. That fear is specific, acute, and unserved. We lead with <b>keeping the group together off-grid</b> and <b>getting un-stuck</b> — everything else is supporting cast.</p>
+      <p><b>The bet.</b> Give the group a cheap LoRa mesh device so their phones can see each other with no cell signal, wrap it in polished maps and a recovery co-pilot, and charge a subscription that quietly pays for the hardware. WHOOP proved people will happily take a "free" device if the service is worth the monthly.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Why this is defensible</div>
+      <table>
+        <tbody>
+          <tr><td class="strong">Hardware</td><td class="mut">Capital, firmware &amp; certification a cloner can't skip</td></tr>
+          <tr><td class="strong">Deployed fleet</td><td class="mut">Mesh only works where devices already are — first mover compounds</td></tr>
+          <tr><td class="strong">Data</td><td class="mut">Every trip and recovery makes the product smarter</td></tr>
+          <tr><td class="strong">Community</td><td class="mut">Clubs and convoys create switching cost &amp; loyalty</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><span class="lb">The point</span>Copy the screens all you like — you can't copy a mesh you never deployed or recoveries you never logged.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 02 MOAT STACK ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">02</div>
+    <div class="htxt"><span class="kicker">Defensibility</span><h2>The moat stack</h2></div>
+  </div>
+  <p class="lede">Read it bottom to top. Each layer is harder to copy than the one below — and the value migrates upward as the business matures. If we only ever ship the bottom layer, we're a feature. The plan is to climb.</p>
+
+  <div class="fig avoid">
+  <svg viewBox="0 0 720 360" width="100%" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <linearGradient id="l5" x1="0" x2="1"><stop offset="0" stop-color="#3E6B4F"/><stop offset="1" stop-color="#2f5540"/></linearGradient>
+      <linearGradient id="l4" x1="0" x2="1"><stop offset="0" stop-color="#6E5433"/><stop offset="1" stop-color="#5a4429"/></linearGradient>
+      <linearGradient id="l3" x1="0" x2="1"><stop offset="0" stop-color="#A9781E"/><stop offset="1" stop-color="#946818"/></linearGradient>
+      <linearGradient id="l2" x1="0" x2="1"><stop offset="0" stop-color="#C0611E"/><stop offset="1" stop-color="#a4511a"/></linearGradient>
+      <linearGradient id="l1" x1="0" x2="1"><stop offset="0" stop-color="#C9B79A"/><stop offset="1" stop-color="#bda67f"/></linearGradient>
+      <marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2b261d"/></marker>
+    </defs>
+    <!-- axis arrow -->
+    <line x1="24" y1="330" x2="24" y2="26" stroke="#2b261d" stroke-width="1.4" marker-end="url(#ah)"/>
+    <text x="18" y="182" fill="#2b261d" font-family="Inter" font-size="10" font-weight="700" letter-spacing="2" transform="rotate(-90 18 182)" text-anchor="middle">HARDER TO COPY  ·  MORE VALUE</text>
+
+    <!-- layers: x from 60, trapezoids narrowing to top -->
+    <!-- L1 bottom widest -->
+    <polygon points="70,300 470,300 450,356 90,356" fill="url(#l1)"/>
+    <polygon points="110,242 430,242 470,300 70,300" fill="url(#l2)"/>
+    <polygon points="150,184 390,184 430,242 110,242" fill="url(#l3)"/>
+    <polygon points="190,126 350,126 390,184 150,184" fill="url(#l4)"/>
+    <polygon points="230,60 310,60 350,126 190,126" fill="url(#l5)"/>
+
+    <!-- labels (right side connectors) -->
+    <g font-family="Inter" font-size="11">
+      <text x="270" y="333" fill="#4a3d24" text-anchor="middle" font-weight="700">THE APP</text>
+      <text x="270" y="276" fill="#fff" text-anchor="middle" font-weight="700">HARDWARE</text>
+      <text x="270" y="219" fill="#fff" text-anchor="middle" font-weight="700">DEPLOYED FLEET</text>
+      <text x="270" y="161" fill="#fff" text-anchor="middle" font-weight="700">DATA</text>
+      <text x="270" y="99" fill="#fff" text-anchor="middle" font-weight="700" font-size="10">AI + COMMUNITY</text>
+    </g>
+    <!-- right annotations -->
+    <g font-family="Inter" font-size="9.5" fill="#5b513f">
+      <line x1="452" y1="328" x2="512" y2="328" stroke="#cabda0"/><text x="518" y="331">Maps &amp; UI — cloneable in a weekend</text>
+      <line x1="472" y1="271" x2="512" y2="271" stroke="#cabda0"/><text x="518" y="274">LoRa device — capital, firmware, FCC/CE</text>
+      <line x1="432" y1="213" x2="512" y2="213" stroke="#cabda0"/><text x="518" y="216">Mesh density where people actually drive</text>
+      <line x1="392" y1="155" x2="512" y2="155" stroke="#cabda0"/><text x="518" y="158">Recovery + terrain data that compounds</text>
+      <line x1="352" y1="93" x2="512" y2="93" stroke="#cabda0"/><text x="518" y="96">Knowledge base + tribal loyalty</text>
+    </g>
+  </svg>
+  <div class="figcap">Fig. 1 — Layers of defensibility. The base is exposed to copycats; the apex is nearly impossible to replicate without years of deployment and data.</div>
+  </div>
+</section>
+
+<!-- ════════ 03 MARKET ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">03</div>
+    <div class="htxt"><span class="kicker">Where we play</span><h2>Nobody owns the off-grid convoy.</h2></div>
+  </div>
+  <p class="lede">The map apps are built for one person with signal. The satellite gadgets are built for one person in an emergency. Real overland groups off-grid fall straight through the gap — and that gap is the whole opportunity.</p>
+  <table>
+    <thead><tr><th>Category</th><th>Who</th><th>What they nail</th><th>Where they leave the gap</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">Trail &amp; map apps</td><td>AllTrails, onX Offroad, Gaia GPS</td><td>Gorgeous maps, huge trail libraries, cheap subs</td><td>Single-user, need signal, no hardware, no group cohesion, no recovery help</td></tr>
+      <tr><td class="strong">Satellite safety</td><td>Garmin inReach, Zoleo, SPOT</td><td>True global SOS &amp; messaging anywhere</td><td>$150–400 hardware + pricey plans; built for solo emergencies, clunky, not live convoy tracking</td></tr>
+      <tr><td class="strong">DIY mesh</td><td>Meshtastic community</td><td>The LoRa tech works &amp; is cheap</td><td>Hobbyist, no maps, no UX, no support, no community product</td></tr>
+      <tr class="hl"><td class="strong">Overland <span class="pill g">us</span></td><td>This platform</td><td>Polished maps + real-time off-grid group mesh + recovery co-pilot, one accessible bundle</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <div class="quote">We're not competing on <b>prettier maps</b>. We're the only one that keeps a <b>whole convoy together</b> where there is no signal — and helps them <b>get un-stuck</b> when it goes wrong.</div>
+</section>
+
+<!-- ════════ 04 MODEL ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">04</div>
+    <div class="htxt"><span class="kicker">The business model</span><h2>Subscriptions pay for the "free" device.</h2></div>
+  </div>
+  <p class="lede">The subscription isn't just software margin — it's the engine that funds the hardware, which drives adoption, which builds the moat, which lowers churn, which funds more hardware. Get the loop spinning and it compounds.</p>
+
+  <div class="cols avoid">
+    <div class="fig">
+    <svg viewBox="0 0 340 300" width="100%" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="fa" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#3E6B4F"/></marker>
+      </defs>
+      <!-- arcs of a loop -->
+      <g fill="none" stroke="#3E6B4F" stroke-width="2.4" marker-end="url(#fa)">
+        <path d="M120,54 A120,120 0 0 1 286,120"/>
+        <path d="M286,180 A120,120 0 0 1 200,286"/>
+        <path d="M140,286 A120,120 0 0 1 54,180"/>
+        <path d="M54,120 A120,120 0 0 1 120,54"/>
+      </g>
+      <!-- nodes -->
+      <g font-family="Inter" font-size="9" text-anchor="middle">
+        <circle cx="90" cy="52" r="30" fill="#C0611E"/><text x="90" y="49" fill="#fff" font-weight="700">$</text><text x="90" y="61" fill="#fff" font-size="7.5">Subscribe</text>
+        <circle cx="288" cy="90" r="30" fill="#6E5433"/><text x="288" y="87" fill="#fff" font-size="7.5">Free</text><text x="288" y="97" fill="#fff" font-size="7.5">device</text>
+        <circle cx="250" cy="248" r="30" fill="#A9781E"/><text x="250" y="245" fill="#fff" font-size="7.5">Off-grid</text><text x="250" y="255" fill="#fff" font-size="7.5">safety</text>
+        <circle cx="52" cy="210" r="30" fill="#3E6B4F"/><text x="52" y="207" fill="#fff" font-size="7.5">Low churn</text><text x="52" y="217" fill="#fff" font-size="7.5">+ referrals</text>
+      </g>
+      <text x="170" y="152" text-anchor="middle" font-family="Fraunces" font-weight="600" font-size="12" fill="#2b261d">Retention</text>
+      <text x="170" y="167" text-anchor="middle" font-family="Fraunces" font-weight="600" font-size="12" fill="#2b261d">flywheel</text>
+    </svg>
+    <div class="figcap">Fig. 2 — Every turn adds members, mesh density and data, which deepens the moat and lowers churn.</div>
+    </div>
+    <div>
+      <div class="eyebrow">How each node pays for the next</div>
+      <table>
+        <tbody>
+          <tr><td class="strong num">1</td><td>Members subscribe — <b>~$15/mo on an annual commit</b>.</td></tr>
+          <tr><td class="strong num">2</td><td>That funds the <b>free LoRa device</b>, offline maps and the recovery co-pilot.</td></tr>
+          <tr><td class="strong num">3</td><td>Off-grid safety they can't get elsewhere gets used <b>every single trip</b>.</td></tr>
+          <tr><td class="strong num">4</td><td>Daily value = <b>low churn + referrals</b> → denser mesh, more data, deeper moat → more members.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout g"><span class="lb">Why annual, not monthly</span>The 12-month commitment is not a pricing trick — it is the single mechanism that keeps a member subscribed long enough to pay back their device. It is the load-bearing wall of the whole model.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 05 UNIT ECONOMICS ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">05</div>
+    <div class="htxt"><span class="kicker">Unit economics</span><h2>With the device vs. without it.</h2></div>
+  </div>
+  <p class="lede">Four ways to charge. App-only is cheap and fast but shallow. Selling the device protects cash but throttles growth. The free-device model earns 3× the lifetime value and builds the moat — if churn behaves (Section 06).</p>
+
+  <table>
+    <thead><tr>
+      <th>Model</th><th class="r">User upfront</th><th class="r">Monthly</th><th class="r">Device cost</th><th class="r">Contribution / mo</th><th class="r">Payback</th><th class="r">Churn</th><th class="r">Net LTV</th><th class="r">LTV:CAC</th><th>Moat</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="strong">A · App-only</td><td class="r">$0</td><td class="r">$9.99</td><td class="r">$0</td><td class="r">$7.44</td><td class="r">—</td><td class="r">7%</td><td class="r">$61</td><td class="r">2.4×</td><td><span class="pill r">Weak</span></td></tr>
+      <tr class="hl"><td class="strong">B · Free device + sub</td><td class="r">$0</td><td class="r">$14.99</td><td class="r">$55</td><td class="r">$11.54</td><td class="r">4.8 mo</td><td class="r">4%</td><td class="r g">$189</td><td class="r">5.2×</td><td><span class="pill g">Strong</span></td></tr>
+      <tr><td class="strong">C · Sell device + sub</td><td class="r">$99</td><td class="r">$9.99</td><td class="r">$55 <span class="mut">(+$44)</span></td><td class="r">$6.69</td><td class="r">day 1</td><td class="r">4%</td><td class="r">$166</td><td class="r">4.7×</td><td><span class="pill g">Strong</span></td></tr>
+      <tr><td class="strong">D · Tiered (blended)</td><td class="r">$0</td><td class="r">0 / 10 / 20</td><td class="r">mix</td><td class="r">blend</td><td class="r">mixed</td><td class="r">mixed</td><td class="r g">highest</td><td class="r">best</td><td><span class="pill g">Strong</span></td></tr>
+    </tbody>
+  </table>
+  <div class="figcap" style="margin-bottom:6px">Per member, blended, pilot-year costs. Contribution = revenue − processing − infra/AI/maps − support. Net LTV = lifetime contribution − device − CAC. Figures illustrative (Section 08 assumptions).</div>
+
+  <div class="cols avoid" style="margin-top:8px">
+    <div class="fig">
+      <div class="eyebrow">Net lifetime value per member, by model</div>
+      <svg viewBox="0 0 360 200" width="100%" preserveAspectRatio="xMidYMid meet">
+        <line x1="46" y1="170" x2="352" y2="170" stroke="#D6C9AE"/>
+        <g font-family="Inter" font-size="8.5" fill="#8a7f69" text-anchor="end">
+          <text x="40" y="173">$0</text><text x="40" y="130">$120</text><text x="40" y="90">$240</text><text x="40" y="50">$360</text>
+        </g>
+        <g stroke="#EFE7D6"><line x1="46" y1="130" x2="352" y2="130"/><line x1="46" y1="90" x2="352" y2="90"/><line x1="46" y1="50" x2="352" y2="50"/></g>
+        <!-- bars: scale 170 - val/360*120... use px = val*0.333 -->
+        <rect x="80"  y="150" width="56" height="20"  fill="#C9B79A"/>
+        <rect x="170" y="107" width="56" height="63"  fill="#C0611E"/>
+        <rect x="260" y="53"  width="56" height="117" fill="#3E6B4F"/>
+        <g font-family="Inter" font-size="9" text-anchor="middle" font-weight="700" fill="#2b261d">
+          <text x="108" y="145">$61</text><text x="198" y="102">$189</text><text x="288" y="48">$350</text>
+        </g>
+        <g font-family="Inter" font-size="8" text-anchor="middle" fill="#8a7f69">
+          <text x="108" y="186">App-only</text><text x="198" y="186">Free device</text><text x="288" y="180">Free device</text><text x="288" y="190">(at volume)</text>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <div class="stats" style="flex-direction:column;gap:10px">
+        <div class="stat"><b>3×</b><span>Lifetime value of the device model vs app-only</span></div>
+        <div class="stat"><b>4.8 → 2.5 mo</b><span>Device payback, pilot → volume</span></div>
+        <div class="stat"><b>5–11×</b><span>LTV:CAC as the flywheel compounds</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout"><span class="lb">The one-line read</span>App-only earns ~$61 a member and can be cloned in a weekend. The free device earns ~$189 (up to ~$350 at scale) <b>and</b> builds a moat — but only if members stay long enough to pay back the ~$55 device. That is the entire game, and it lives or dies on churn.</div>
+</section>
+
+<!-- ════════ 06 CHURN CLIFF ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">06</div>
+    <div class="htxt"><span class="kicker">The decisive risk</span><h2>The churn cliff.</h2></div>
+  </div>
+  <p class="lede">This is the number that decides whether "free device" is brilliant or bankrupt. Give away a $55 device and you must keep the member long enough to earn it back. Below ~6% monthly churn the model is excellent; past ~8% it starts bleeding; past ~12% every member is a loss.</p>
+
+  <div class="cols avoid">
+    <div>
+      <table>
+        <thead><tr><th class="r">Monthly churn</th><th class="r">Avg life</th><th class="r">Net LTV / member</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td class="r">3%</td><td class="r">33 mo</td><td class="r g">+$281</td><td><span class="pill g">Excellent</span></td></tr>
+          <tr><td class="r">4%</td><td class="r">25 mo</td><td class="r g">+$189</td><td><span class="pill g">Strong</span></td></tr>
+          <tr><td class="r">6%</td><td class="r">17 mo</td><td class="r g">+$93</td><td><span class="pill g">OK</span></td></tr>
+          <tr><td class="r">8%</td><td class="r">12 mo</td><td class="r w">+$44</td><td><span class="pill y">Thin</span></td></tr>
+          <tr><td class="r">12%</td><td class="r">8 mo</td><td class="r r-">−$4</td><td><span class="pill r">Underwater</span></td></tr>
+          <tr><td class="r">20%</td><td class="r">5 mo</td><td class="r r-">−$42</td><td><span class="pill r">Loss</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fig">
+      <div class="eyebrow">Net LTV per member vs monthly churn</div>
+      <svg viewBox="0 0 360 220" width="100%" preserveAspectRatio="xMidYMid meet">
+        <!-- cliff zone (below zero) -->
+        <rect x="150" y="10" width="26" height="182" fill="#F7E9E5"/>
+        <!-- zero line at x=170 -->
+        <line x1="170" y1="8" x2="170" y2="196" stroke="#A23B2C" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="170" y="210" fill="#A23B2C" font-family="Inter" font-size="8" text-anchor="middle" font-weight="700">break-even</text>
+        <!-- rows -->
+        <g font-family="Inter" font-size="9" fill="#8a7f69" text-anchor="end">
+          <text x="40" y="27">3%</text><text x="40" y="57">4%</text><text x="40" y="87">6%</text><text x="40" y="117">8%</text><text x="40" y="147">12%</text><text x="40" y="177">20%</text>
+        </g>
+        <!-- bars from zeroX=170, scale .55 px/$ ; positive right, negative left -->
+        <g>
+          <rect x="170" y="16" width="154" height="16" fill="#3E6B4F"/><text x="328" y="28" font-family="Inter" font-size="8.5" fill="#3E6B4F" font-weight="700">+$281</text>
+          <rect x="170" y="46" width="104" height="16" fill="#3E6B4F"/><text x="278" y="58" font-family="Inter" font-size="8.5" fill="#3E6B4F" font-weight="700">+$189</text>
+          <rect x="170" y="76" width="51"  height="16" fill="#6E8f6f"/><text x="225" y="88" font-family="Inter" font-size="8.5" fill="#3E6B4F" font-weight="700">+$93</text>
+          <rect x="170" y="106" width="24" height="16" fill="#A9781E"/><text x="198" y="118" font-family="Inter" font-size="8.5" fill="#A9781E" font-weight="700">+$44</text>
+          <rect x="168" y="136" width="3"  height="16" fill="#A23B2C"/><text x="150" y="148" font-family="Inter" font-size="8.5" fill="#A23B2C" font-weight="700" text-anchor="end">−$4</text>
+          <rect x="147" y="166" width="23" height="16" fill="#A23B2C"/><text x="142" y="178" font-family="Inter" font-size="8.5" fill="#A23B2C" font-weight="700" text-anchor="end">−$42</text>
+        </g>
+      </svg>
+      <div class="figcap">Fig. 3 — Free-device model, pilot costs. Left of the dashed line, every member loses money.</div>
+    </div>
+  </div>
+  <div class="callout r"><span class="lb">Stay left of the cliff</span>Two levers, in order of power: <b>(1)</b> the 12-month commitment (structurally caps churn), and <b>(2)</b> genuine off-grid safety value people won't cancel before a season. Everything else — discounts, features, marketing — is secondary to these two.</div>
+</section>
+
+<!-- ════════ 07 AI ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">07</div>
+    <div class="htxt"><span class="kicker">The AI edge</span><h2>Stop predicting. Start rescuing.</h2></div>
+  </div>
+  <p class="lede">Predicting terrain you've never seen on sand that moves is not a product — it's a liability. A safety tool that's confidently wrong is worse than none. So we kill the crystal ball and build the thing that's actually reliable and valuable: a reactive recovery co-pilot backed by data nobody else has.</p>
+
+  <div class="cols">
+    <div>
+      <table>
+        <thead><tr><th>We do NOT build</th><th>We DO build</th></tr></thead>
+        <tbody>
+          <tr><td class="r-">"You'll lose a vehicle over the ridge"</td><td class="g">"Vehicle 3 is 1.2&nbsp;km back and the gap is growing" <span class="mut">(pure arithmetic on GPS — reliable)</span></td></tr>
+          <tr><td class="r-">Predicting hazards on unknown trails</td><td class="g">Guided recovery when someone is stuck, from a curated expert playbook</td></tr>
+          <tr><td class="r-">Live photo diagnosis in the dunes</td><td class="g">Queue the photo, analyse it in the cloud when reconnected — to improve the playbook</td></tr>
+        </tbody>
+      </table>
+      <div class="callout g"><span class="lb">Measuring ≠ predicting</span>We keep the alerts that are just math on positions we already have. We drop anything that pretends to forecast the desert.</div>
+    </div>
+    <div>
+      <div class="eyebrow">How the recovery co-pilot works — and why it's light</div>
+      <p><b>Tap "I'm stuck."</b> Answer a few quick prompts — surface (sand / mud / rock), nose up or down, recovery gear on hand, solo or in a group, aired down? Get a step-by-step recovery procedure.</p>
+      <p><b>~90% is a deterministic expert playbook</b> authored by real recovery pros. Near-zero compute, fully offline, and trustworthy <i>because it's curated, not hallucinated.</i> A small offline model on the <b>phone</b> just handles phrasing and follow-ups.</p>
+      <div class="callout"><span class="lb">This protects the economics</span>The LoRa device runs <b>zero AI</b> — it's a dumb, cheap comms box. AI lives on the phone (offline) and in the cloud (when reconnected). Keeping the device dumb keeps the BOM low, which is exactly what makes the free device survivable.</div>
+    </div>
+  </div>
+  <div class="quote">The real AI moat isn't the model — it's <b>the knowledge base.</b> Real stucks, real fixes, tagged by terrain and vehicle, compounding every trip. Anyone can copy a chat box; nobody can copy <b>"here's what worked in Liwa in August."</b></div>
+</section>
+
+<!-- ════════ 08 CAPITAL ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">08</div>
+    <div class="htxt"><span class="kicker">Reality check</span><h2>The hidden cost of "free".</h2></div>
+  </div>
+  <p class="lede">The free-device model is a working-capital business wearing a software costume. You pay for the device today and earn it back over months — a cash gap that grows with success. Respect it, and design around it.</p>
+  <div class="cols">
+    <div>
+      <table>
+        <thead><tr><th>Consideration</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">~$55 out the door before month-5 payback</td><td>Annual plan billed up front funds the device on day one</td></tr>
+          <tr><td class="strong">Inventory &amp; minimum order sizes tie up cash</td><td>Start with off-the-shelf Meshtastic-class units — no custom tooling</td></tr>
+          <tr><td class="strong">Hardware fails; returns cost real money</td><td>Reserve built into landed cost; simple, rugged, few parts</td></tr>
+          <tr><td class="strong">FCC/CE certification for custom hardware</td><td>Use pre-certified modules until volume justifies own design</td></tr>
+          <tr><td class="strong">Cancels before payback = guaranteed loss</td><td>12-month commitment; optional refundable device deposit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="eyebrow">Assumptions behind every number in this brief</div>
+      <table>
+        <thead><tr><th>Driver</th><th class="r">Pilot</th><th class="r">Volume</th></tr></thead>
+        <tbody>
+          <tr><td>Landed device cost</td><td class="r">$55</td><td class="r">$32</td></tr>
+          <tr><td>Flagship subscription</td><td class="r">$14.99</td><td class="r">$14.99</td></tr>
+          <tr><td>Annual plan (effective/mo)</td><td class="r">$12.42</td><td class="r">$12.42</td></tr>
+          <tr><td>Infra + AI + maps / user</td><td class="r">$2.00</td><td class="r">$1.20</td></tr>
+          <tr><td>Support + ops / user</td><td class="r">$1.00</td><td class="r">$0.70</td></tr>
+          <tr><td>Payment processing</td><td class="r">3%</td><td class="r">3%</td></tr>
+          <tr><td>Blended CAC</td><td class="r">$45</td><td class="r">$35</td></tr>
+          <tr><td>Monthly churn</td><td class="r">4%</td><td class="r">3%</td></tr>
+        </tbody>
+      </table>
+      <div class="figcap">Illustrative planning assumptions — validate with suppliers and a live pilot before any capital commitment.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 09 RECOMMENDATION ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">09</div>
+    <div class="htxt"><span class="kicker">The recommendation</span><h2>Option B economics, Option D packaging.</h2></div>
+  </div>
+  <p class="lede">Don't sell the device (it strangles the growth that makes you defensible). Don't stay app-only (no moat). Sell tiers to capture the whole market, and steer serious groups to the free-device flagship on an annual commit — where the margin and the moat both live.</p>
+
+  <div class="card reco avoid" style="margin-bottom:12px">
+    <span class="tag">Do this</span>
+    <h3 style="margin:2px 0 6px">Prove willingness-to-pay first. Add hardware only once churn is proven.</h3>
+    <p class="mut" style="margin:0">Validate the app before you gamble on inventory. Then pilot the device small, watch the churn cliff, and scale only when the numbers hold.</p>
+  </div>
+
+  <div class="eyebrow">Phased roadmap</div>
+  <table>
+    <thead><tr><th>Phase</th><th>Offer</th><th class="r">Price</th><th>Goal</th><th>Gate to next</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">P1 · Validate</td><td>App-only Pro (maps, convoy-over-cell, trips)</td><td class="r">$9.99/mo</td><td>Prove willingness-to-pay, build funnel — <b>zero hardware risk</b></td><td>Healthy paid conversion &amp; retention</td></tr>
+      <tr><td class="strong">P2 · Pilot device</td><td>Invite-only Convoy tier, off-the-shelf device</td><td class="r">$149/yr</td><td>Measure real churn &amp; device economics on a small fleet</td><td>Monthly churn &lt; ~4%, payback confirmed</td></tr>
+      <tr><td class="strong">P3 · Scale</td><td>Open Convoy tier; negotiate BOM down</td><td class="r">$149/yr</td><td>Grow mesh density &amp; data moat; drive unit cost to volume</td><td>Volume economics &amp; supply stable</td></tr>
+      <tr><td class="strong">P4 · Custom HW</td><td>Own-design device once demand is proven</td><td class="r">bundled</td><td>Maximise margin, differentiation &amp; IP</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="eyebrow" style="margin-top:14px">Tiers to launch (P3+)</div>
+  <div class="col3 avoid">
+    <div class="card"><span class="tag">Free</span><h3 style="margin:3px 0">$0</h3><p class="mut" style="margin:0">Basic maps, single-vehicle trips, community trails. The funnel.</p></div>
+    <div class="card"><span class="tag">Pro</span><h3 style="margin:3px 0">$9.99<span style="font-size:10px">/mo</span></h3><p class="mut" style="margin:0">Offline maps, convoy-over-cell, recovery co-pilot, trip history. Solo overlanders.</p></div>
+    <div class="card" style="border-color:var(--ember);border-width:1.5px"><span class="tag">Convoy · flagship</span><h3 style="margin:3px 0">$149<span style="font-size:10px">/yr</span></h3><p class="mut" style="margin:0"><b style="color:var(--ember2)">Free LoRa device</b>, off-grid mesh tracking, SOS relay, priority support. Serious groups.</p></div>
+  </div>
+</section>
+
+<!-- ════════ 10 DECISIONS ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">10</div>
+    <div class="htxt"><span class="kicker">Over to you</span><h2>The decisions in front of us.</h2></div>
+  </div>
+  <div class="cols">
+    <div>
+      <div class="eyebrow">Three calls to make now</div>
+      <table>
+        <tbody>
+          <tr><td class="strong num">1</td><td><b>Wedge.</b> Do we commit to <b>safety-first</b> (off-grid cohesion + recovery) as the headline, over social/discovery?</td></tr>
+          <tr><td class="strong num">2</td><td><b>Sequencing.</b> Ship <b>app-only Pro first</b> to validate, then pilot hardware — agreed?</td></tr>
+          <tr><td class="strong num">3</td><td><b>Price anchor.</b> Flagship at <b>$149/yr annual commit</b> (the churn lever), or do we also test a monthly?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="eyebrow">What would make the moat real, fast</div>
+      <p>The recovery knowledge base is the compounding asset. The fastest way to seed it is to <b>co-author the first playbooks with real desert-recovery pros or a club</b> — that authored expertise is both the seed data and instant credibility. If you have those relationships, that's move number one.</p>
+      <div class="callout g"><span class="lb">Bottom line</span>The app gets people in. The free device, the mesh, and the recovery data keep them — and keep everyone else out. Price for the system, not the software.</div>
+    </div>
+  </div>
+  <div class="foot">
+    <b>Illustrative planning model — not a forecast.</b> All cost, churn, CAC and pricing figures are assumptions for comparison only and must be validated with suppliers and a live pilot before any capital commitment. Average member life approximated as 1 ÷ monthly churn. Contribution excludes fixed overhead (R&amp;D, G&amp;A) and one-time tooling/certification. Competitor pricing indicative and subject to change. Prepared for internal ideation · Overland · July 2026.
+  </div>
+</section>
+
+</body>
+</html>
