@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Overland — PMF & Competitive Brief</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+
+@page { size: A4; margin: 17mm 16mm; }
+@page cover { margin: 0; }
+
+*{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+html,body{ margin:0; padding:0; }
+:root{
+  --ink:#1a1712; --charcoal:#2b261d; --paper:#FBF7EF; --paper2:#F4ECDD; --sand:#E7D9BC;
+  --line:#E4DAC6; --line2:#D6C9AE; --ember:#C0611E; --ember2:#8f4614; --dune:#6E5433;
+  --muted:#8a7f69; --good:#3E6B4F; --warn:#A9781E; --bad:#A23B2C;
+}
+body{ font-family:"Inter",system-ui,Arial,sans-serif; color:var(--ink); font-size:10.5px; line-height:1.62; background:var(--paper); }
+h1,h2,h3,h4{ font-family:"Fraunces","Georgia",serif; color:var(--charcoal); margin:0; font-weight:600; letter-spacing:-0.01em; }
+p{ margin:0 0 9px; }
+b,strong{ font-weight:600; color:var(--ink); }
+.mut{ color:var(--muted); }
+.kicker{ font-family:"Inter",sans-serif; font-size:8.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--ember); }
+.num{ font-variant-numeric:tabular-nums; }
+
+/* ── COVER ─────────────────────────────────────────── */
+.cover{ page:cover; page-break-after:always; position:relative; width:210mm; height:297mm; overflow:hidden; background:#1a1712; }
+.cover img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.cover .scrim{ position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(20,17,12,.55) 0%, rgba(20,17,12,0) 26%, rgba(20,17,12,0) 44%, rgba(20,17,12,.72) 80%, rgba(20,17,12,.95) 100%); }
+.cover .inner{ position:absolute; inset:0; padding:20mm 18mm; display:flex; flex-direction:column; justify-content:space-between; color:#F6EEDE; }
+.wordmark{ display:flex; align-items:center; gap:10px; }
+.wordmark .dot{ width:9px; height:9px; border-radius:50%; background:var(--ember); box-shadow:0 0 0 4px rgba(192,97,30,.28); }
+.wordmark .wm{ font-family:"Fraunces",serif; font-weight:600; font-size:15px; letter-spacing:.18em; text-transform:uppercase; color:#fff; }
+.wordmark .div{ flex:1; height:1px; background:rgba(246,238,222,.35); margin-left:6px; }
+.wordmark .conf{ font-size:8px; letter-spacing:.22em; text-transform:uppercase; color:#e7d3ad; }
+.cover h1{ color:#fff; font-size:50px; line-height:1.0; font-weight:600; max-width:15cm; text-shadow:0 2px 24px rgba(0,0,0,.4); }
+.cover .kick2{ font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--ember); margin-bottom:14px; font-weight:700; }
+.cover .sub{ font-size:14px; line-height:1.5; color:#f0e5d1; max-width:14.5cm; margin-top:16px; }
+.cover .rule{ width:64px; height:3px; background:var(--ember); margin:22px 0 0; }
+.cover .meta{ display:flex; justify-content:space-between; align-items:flex-end; font-size:9.5px; color:#e9dcc0; border-top:1px solid rgba(246,238,222,.28); padding-top:14px; }
+.cover .meta b{ color:#fff; font-weight:600; }
+
+/* ── SECTIONS ──────────────────────────────────────── */
+.opener{ page-break-before:always; padding-top:2mm; }
+.opener .head{ display:flex; align-items:baseline; gap:16px; border-bottom:1.5px solid var(--charcoal); padding-bottom:10px; margin-bottom:14px; }
+.opener .no{ font-family:"Fraunces",serif; font-weight:600; font-size:40px; line-height:.8; color:var(--sand); -webkit-text-stroke:0; }
+.opener .htxt .kicker{ margin-bottom:3px; display:block; }
+.opener h2{ font-size:23px; line-height:1.05; }
+.lede{ font-family:"Fraunces",serif; font-size:14.5px; line-height:1.5; color:var(--dune); font-weight:400; margin:0 0 14px; max-width:16.5cm; }
+.lede.i{ font-style:italic; }
+
+.cols{ display:flex; gap:18px; }
+.cols > *{ flex:1; }
+.col3{ display:flex; gap:14px; }
+.col3 > *{ flex:1; }
+
+h3.sub{ font-size:13px; margin:16px 0 6px; }
+.eyebrow{ font-size:8px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+
+/* stats */
+.stats{ display:flex; gap:12px; margin:14px 0 6px; }
+.stat{ flex:1; border-top:2px solid var(--ember); padding-top:8px; }
+.stat b{ font-family:"Fraunces",serif; font-size:26px; font-weight:600; color:var(--charcoal); display:block; line-height:1; }
+.stat span{ font-size:8.5px; color:var(--muted); letter-spacing:.02em; display:block; margin-top:5px; text-transform:uppercase; }
+
+/* tables */
+table{ width:100%; border-collapse:collapse; margin:10px 0 6px; font-size:9.5px; }
+thead th{ text-align:left; font-weight:600; font-size:8.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted); border-bottom:1.5px solid var(--charcoal); padding:0 9px 7px; }
+tbody td{ padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+tbody tr:last-child td{ border-bottom:1.5px solid var(--line2); }
+th.r,td.r{ text-align:right; font-variant-numeric:tabular-nums; }
+th.c,td.c{ text-align:center; }
+.hl{ background:var(--paper2); }
+td .strong{ font-weight:600; }
+.g{ color:var(--good); font-weight:600; } .w{ color:var(--warn); font-weight:600; } .r-{ color:var(--bad); font-weight:600; }
+.pill{ display:inline-block; padding:1.5px 8px; border-radius:20px; font-size:8px; font-weight:700; letter-spacing:.04em; }
+.pill.g{ background:#e6f0e9; color:var(--good);} .pill.y{ background:#f6ecd6; color:var(--warn);} .pill.r{ background:#f6e2dd; color:var(--bad);}
+.tick{ font-weight:700; } .tick.g{ color:var(--good);} .tick.w{ color:var(--warn);} .tick.x{ color:#bcae94;}
+
+/* callout / quote */
+.callout{ border-left:3px solid var(--ember); background:var(--paper2); padding:11px 15px; margin:12px 0; border-radius:0 6px 6px 0; }
+.callout.g{ border-color:var(--good); background:#eaf3ee; }
+.callout.r{ border-color:var(--bad); background:#f7e9e5; }
+.callout .lb{ font-size:8px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ember); display:block; margin-bottom:3px; }
+.callout.g .lb{ color:var(--good);} .callout.r .lb{ color:var(--bad);}
+.quote{ font-family:"Fraunces",serif; font-style:italic; font-size:18px; line-height:1.35; color:var(--charcoal); border-top:1px solid var(--line2); border-bottom:1px solid var(--line2); padding:16px 0; margin:16px 0; text-align:center; }
+.quote b{ color:var(--ember2); font-weight:600; font-style:normal; }
+
+.card{ border:1px solid var(--line); border-radius:9px; padding:13px 15px; background:#fff; }
+.card .tag{ font-size:8px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ember); }
+.card h3{ font-size:14px; margin:2px 0 5px; }
+.card .price{ font-size:9px; color:var(--dune); font-weight:600; margin:4px 0 6px; }
+.card .ln{ font-size:9px; margin:3px 0; line-height:1.5; }
+.card .ln .mini{ font-size:7.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--good); }
+.card .ln.bad .mini{ color:var(--bad); }
+.card.reco{ background:var(--charcoal); color:#f3ead9; border:none; }
+.card.reco h3, .card.reco .tag{ color:#fff; } .card.reco .tag{ color:var(--sand);} .card.reco .mut{ color:#c9bda3; }
+
+/* ordered moves */
+ol.moves{ margin:6px 0; padding:0; counter-reset:m; list-style:none; }
+ol.moves > li{ position:relative; padding:0 0 11px 34px; margin:0 0 11px; border-bottom:1px solid var(--line); }
+ol.moves > li:last-child{ border-bottom:none; }
+ol.moves > li::before{ counter-increment:m; content:counter(m); position:absolute; left:0; top:-1px;
+  font-family:"Fraunces",serif; font-weight:600; font-size:16px; color:var(--ember); width:24px; text-align:center; }
+ol.moves .note{ display:block; margin-top:5px; font-size:9px; color:var(--muted); line-height:1.55; border-left:2px solid var(--line2); padding-left:9px; }
+
+.fig{ margin:8px 0 4px; }
+.figcap{ font-size:8.5px; color:var(--muted); margin-top:6px; letter-spacing:.02em; }
+.foot{ margin-top:16px; border-top:1px solid var(--line); padding-top:9px; font-size:8.2px; color:var(--muted); line-height:1.6; }
+.foot b{ color:var(--dune); }
+svg{ display:block; }
+.avoid{ page-break-inside:avoid; }
+</style>
+</head>
+<body>
+
+<!-- ════════ COVER ════════ -->
+<section class="cover">
+  <img src="file:///home/runner/workspace/attached_assets/generated_images/pmf-cover.png" alt="Aerial desert dunes with a single track" />
+  <div class="scrim"></div>
+  <div class="inner">
+    <div class="wordmark">
+      <span class="dot"></span><span class="wm">Overland</span><span class="div"></span><span class="conf">Confidential · Internal</span>
+    </div>
+    <div>
+      <div class="kick2">Product–Market Fit &amp; Competitive Brief</div>
+      <h1>The desert is<br/>wide open.</h1>
+      <div class="sub">Where the fit is strongest, where the global leaders are weakest, and the sharpest wedge to win it. Fight worldwide head-on and you lose a knife fight; win <b style="color:#fff">MENA</b> first — where in the desert they're barely trying — then expand.</div>
+      <div class="rule"></div>
+    </div>
+    <div class="meta">
+      <div>Prepared by the <b>Product &amp; Design Desk</b><br/>PMF · competitive landscape · positioning</div>
+      <div style="text-align:right">For the Founder<br/><b>July 2026</b> · v2</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 00 HOW TO READ ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">00</div>
+    <div class="htxt"><span class="kicker">The lens — Alstromer / YC</span><h2>PMF isn't decided in a document. It's measured.</h2></div>
+  </div>
+  <p class="lede">Gustaf Alstromer's whole point: product–market fit is not something you argue on a slide — it's something real users prove. The cleanest test in the industry is a single question.</p>
+
+  <div class="quote">"How would you feel if you could <b>no longer use</b> this product?"<br/><span style="font-size:12px;font-style:normal;color:var(--muted)">PMF ≈ when <b style="color:var(--ember2)">≥ 40%</b> say "very disappointed." (Sean Ellis test, used across YC.)</span></div>
+
+  <div class="cols">
+    <div>
+      <div class="eyebrow">The three words in the quote you sent, made testable</div>
+      <table>
+        <thead><tr><th>Alstromer's words</th><th>The real test</th><th>Where you stand</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">genuinely <b>want</b> it</td><td class="mut">Pull from a specific segment</td><td><span class="pill y">Unproven</span></td></tr>
+          <tr><td class="strong">willing to <b>pay</b></td><td class="mut">Revenue, not signups</td><td><span class="pill y">Unproven</span></td></tr>
+          <tr><td class="strong">would <b>miss</b> it</td><td class="mut">The 40% "very disappointed"</td><td><span class="pill y">Unproven</span></td></tr>
+        </tbody>
+      </table>
+      <p class="mut" style="font-size:9px">Honest headline: <b>you don't have PMF yet — nobody does before users.</b> What you <i>can</i> do now is pick the market where the fit hypothesis is strongest and incumbents weakest, ship to a narrow segment, and run the 40% test.</p>
+    </div>
+    <div>
+      <div class="card reco">
+        <span class="tag">Bottom line up front</span>
+        <h3>Win MENA first, then expand.</h3>
+        <p class="mut" style="margin:0">Fighting <b style="color:#fff">worldwide</b> head-on against AllTrails + Gaia + onX + Wikiloc is a knife fight you'll probably lose. <b style="color:#fff">MENA is wide open</b> — the global leaders barely serve it. That's where "a gazillion times better than Gaia &amp; Wikiloc" is actually achievable, because in the desert they're not really trying.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 01 PMF SCORECARD ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">01</div>
+    <div class="htxt"><span class="kicker">The comparison you asked for</span><h2>PMF scorecard — MENA vs. worldwide.</h2></div>
+  </div>
+  <p class="lede">Scored 1–5 on how strong the <i>fit hypothesis</i> is — higher means a better opening for you. Same product, two very different battlefields.</p>
+
+  <table>
+    <thead><tr><th>PMF dimension</th><th class="c">MENA (GCC-led)</th><th class="c">Worldwide</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">Market pull / "want"</td><td class="c"><span class="g">5</span></td><td class="c"><span class="w">3</span></td><td class="mut">Dune bashing (<i>tatees / تطعيس</i>) is a deep cultural pastime in Saudi &amp; UAE; worldwide demand is already well-served</td></tr>
+      <tr><td class="strong">Willingness to pay</td><td class="c"><span class="g">5</span></td><td class="c"><span class="w">3</span></td><td class="mut">GCC ~91% smartphone (UAE ~98%), high disposable income, premium-SUV culture; worldwide is price-sensitive &amp; sub-fatigued</td></tr>
+      <tr><td class="strong">Incumbent weakness</td><td class="c"><span class="g">5</span></td><td class="c"><span class="r-">2</span></td><td class="mut">No dominant localized off-road app in MENA; weak/no Arabic. Worldwide is saturated by 4 strong players</td></tr>
+      <tr><td class="strong">"Would miss it" hook</td><td class="c"><span class="g">5</span></td><td class="c"><span class="w">3</span></td><td class="mut">Desert = no signal + real risk → offline + SOS become can't-live-without; worldwide hikers have softer stakes</td></tr>
+      <tr><td class="strong">Cost to win the segment</td><td class="c"><span class="g">4</span></td><td class="c"><span class="r-">1</span></td><td class="mut">A focused Saudi/UAE-club beachhead is reachable; worldwide CAC against AllTrails/Gaia is brutal</td></tr>
+      <tr><td class="strong">Differentiation headroom</td><td class="c"><span class="g">5</span></td><td class="c"><span class="w">3</span></td><td class="mut">AI + Arabic + desert-specific + safety is clearly new in MENA; worldwide your edges are narrower</td></tr>
+      <tr class="hl"><td class="strong">Total (of 30)</td><td class="c"><b style="font-size:12px;color:var(--good)">29</b></td><td class="c"><b style="font-size:12px;color:var(--warn)">17</b></td><td class="mut">MENA is the beachhead; worldwide is the eventual market</td></tr>
+    </tbody>
+  </table>
+
+  <div class="fig avoid" style="margin-top:12px">
+    <div class="eyebrow">Fit-hypothesis score, of 30</div>
+    <svg viewBox="0 0 620 120" width="100%" preserveAspectRatio="xMidYMid meet">
+      <g font-family="Inter" font-size="10" fill="#8a7f69">
+        <text x="0" y="34">MENA</text>
+        <text x="0" y="86">Worldwide</text>
+      </g>
+      <!-- track -->
+      <rect x="90" y="20" width="470" height="20" rx="4" fill="#EFE7D6"/>
+      <rect x="90" y="72" width="470" height="20" rx="4" fill="#EFE7D6"/>
+      <!-- fill: 29/30 and 17/30 of 470 -->
+      <rect x="90" y="20" width="454" height="20" rx="4" fill="#3E6B4F"/>
+      <rect x="90" y="72" width="266" height="20" rx="4" fill="#C0611E"/>
+      <g font-family="Inter" font-size="10" font-weight="700" fill="#fff">
+        <text x="536" y="34" text-anchor="end">29 / 30</text>
+        <text x="348" y="86" text-anchor="end">17 / 30</text>
+      </g>
+      <line x1="560" y1="12" x2="560" y2="100" stroke="#D6C9AE" stroke-dasharray="3 3"/>
+      <text x="566" y="58" font-family="Inter" font-size="8" fill="#8a7f69">30</text>
+    </svg>
+    <div class="figcap">Fig. 1 — Same app, two battlefields. MENA scores nearly double on fit-hypothesis strength.</div>
+  </div>
+  <div class="callout g"><span class="lb">Verdict</span>MENA is your PMF beachhead. Worldwide is your <i>eventual</i> market, entered later via a sharp niche (AI planning + safety for overlanding), not a frontal assault.</div>
+</section>
+
+<!-- ════════ 02 MARKET SIZE ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">02</div>
+    <div class="htxt"><span class="kicker">TAM signals</span><h2>A smaller pie — but nobody's eating it.</h2></div>
+  </div>
+  <p class="lede">Worldwide is the bigger pie, already sliced. MENA is smaller in absolute dollars but structurally under-served and rich — the ideal asymmetric bet.</p>
+  <table>
+    <thead><tr><th>Segment</th><th>Size / trend</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">Global on/off-road navigation app market</td><td class="num">~$15–22B (2025), CAGR ~5–12%</td><td class="mut">The category you compete in</td></tr>
+      <tr><td class="strong">Global off-road vehicle market</td><td class="num">~$22.5B (2025) → $35.9B (2033)</td><td class="mut">Your users' hardware spend — they invest heavily</td></tr>
+      <tr><td class="strong">MEA off-road vehicle market</td><td class="num">~$450M (2025), CAGR 5.7%</td><td class="mut">Smaller in $ but fast &amp; under-digitized</td></tr>
+      <tr><td class="strong">Middle East SUV market</td><td class="num">~$87.1B (2024)</td><td class="mut">The wallet behind the activity is enormous</td></tr>
+      <tr class="hl"><td class="strong">GCC smartphone penetration</td><td class="num">~91% (UAE ~98%), internet ~99%</td><td class="mut">Distribution is not a barrier</td></tr>
+    </tbody>
+  </table>
+  <div class="stats">
+    <div class="stat"><b>~98%</b><span>UAE smartphone penetration</span></div>
+    <div class="stat"><b>$87B</b><span>Middle East SUV market</span></div>
+    <div class="stat"><b>Under-<br/>digitized</b><span>No localized off-road leader in MENA</span></div>
+  </div>
+</section>
+
+<!-- ════════ 03 COMPETITION ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">03</div>
+    <div class="htxt"><span class="kicker">The competition — real data, real complaints</span><h2>Strong worldwide. Absent in the sand.</h2></div>
+  </div>
+  <p class="lede i">Pricing is 2025–2026 and shifts often; treat as directional.</p>
+  <div class="cols avoid">
+    <div class="card">
+      <span class="tag">Power-user incumbent</span>
+      <h3>Gaia GPS</h3>
+      <div class="price">Free · Premium ~$39.99/yr · +Outside+ $89.99/yr</div>
+      <p class="ln"><span class="mini">Nails</span> 300+ map overlays, deep topo, flexible offline, expert route-building.</p>
+      <p class="ln bad"><span class="mini">Gap</span> #1 complaint: offline downloads buggy &amp; slow; app gone bloated. Uncurated DB, steep for beginners, weak Arabic / no MENA focus.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Global community library</span>
+      <h3>Wikiloc</h3>
+      <div class="price">Freemium · Premium €19.99/yr · 14-day trial</div>
+      <p class="ln"><span class="mini">Nails</span> 60M community trails, 80+ activities, global coverage, cheap.</p>
+      <p class="ln bad"><span class="mini">Gap</span> GPS/distance inaccuracy, tracks drawn as straight lines, Android GPS-lock failures, dated UX, hiking/cycling-centric — not built for 4x4/dune.</p>
+    </div>
+  </div>
+  <div class="cols avoid" style="margin-top:12px">
+    <div class="card">
+      <span class="tag">Off-road specialist (US-centric)</span>
+      <h3>onX Offroad</h3>
+      <div class="price">Free · Premium $34.99/yr · Elite $99.99/yr</div>
+      <p class="ln"><span class="mini">Nails</span> curated trails with open/closed status, great onboarding, land-ownership data.</p>
+      <p class="ln bad"><span class="mini">Gap</span> very US-centric, fewer map layers than Gaia, little MENA presence.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Worldwide category king</span>
+      <h3>AllTrails</h3>
+      <div class="price">60M+ users · 450k trails · 200+ countries · 4.9★</div>
+      <p class="ln"><span class="mini">Nails</span> brand, SEO, community, polished UX, huge top-of-funnel.</p>
+      <p class="ln bad"><span class="mini">Gap</span> hiking-first, not off-road/overlanding; generic; not desert/4x4 specialized; weak Arabic &amp; MENA depth.</p>
+    </div>
+  </div>
+  <div class="callout"><span class="lb">The pattern</span>Every one of them is strong on maps and worldwide scale — and every one is thin on Arabic, desert-specific intelligence, group safety, and off-grid. That thin column is your entire opening.</div>
+</section>
+
+<!-- ════════ 04 FEATURE MATRIX ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">04</div>
+    <div class="htxt"><span class="kicker">Feature comparison</span><h2>Where you win, where you don't.</h2></div>
+  </div>
+  <p class="lede"><span class="tick g">✓</span> strong &nbsp; <span class="tick w">◑</span> partial / weak &nbsp; <span class="tick x">✗</span> absent. Lead with the starred rows; don't fight where the incumbents already win.</p>
+  <table>
+    <thead><tr><th>Capability</th><th class="c">Your app</th><th class="c">Gaia</th><th class="c">Wikiloc</th><th class="c">onX</th><th class="c">AllTrails</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">AI trip planning (conversational, conditions-aware) ★</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td></tr>
+      <tr><td class="strong">Off-road / 4x4-specific design</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick x">✗</span></td></tr>
+      <tr><td class="strong">Desert / dune-specific intelligence ★</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick x">✗</span></td></tr>
+      <tr><td class="strong">Live weather on planning surface</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick w">◑</span></td></tr>
+      <tr><td class="strong">Built-in safety / SOS (plus-codes, share, check-in) ★</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick w">◑</span></td></tr>
+      <tr><td class="strong">Offline maps</td><td class="c"><span class="tick w">◑→<span class="g">✓</span></span></td><td class="c"><span class="tick g">✓</span><span class="mut" style="font-size:7.5px"> buggy</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td class="strong">Community / UGC trails</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td class="strong">Track recorder → shareable trail</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td class="strong">Arabic-first / MENA localization ★</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td></tr>
+      <tr><td class="strong">Convoy / group live tracking ★</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick x">✗</span></td></tr>
+      <tr><td class="strong">Modern, fast, un-bloated UX</td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick x">✗</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+      <tr><td class="mut">Map-layer depth (topo overlays)</td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick w">◑</span></td></tr>
+      <tr><td class="mut">Global trail database scale</td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick g">✓</span></td><td class="c"><span class="tick w">◑</span></td><td class="c"><span class="tick g">✓</span></td></tr>
+    </tbody>
+  </table>
+  <div class="figcap">★ = your differentiators to lead with (build/finish &amp; market hard). The last two rows — map-layer depth and raw trail-DB scale — are where incumbents beat you. Don't fight there first.</div>
+</section>
+
+<!-- ════════ 05 POSITIONING ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">05</div>
+    <div class="htxt"><span class="kicker">Positioning — April Dunford method</span><h2>Start from the alternatives, not the features.</h2></div>
+  </div>
+  <p class="lede">Positioning is relative. Define yourself against what a Gulf off-roader actually does today — then the value becomes obvious.</p>
+  <div class="cols">
+    <div>
+      <table>
+        <tbody>
+          <tr><td class="strong num">1</td><td><b>Competitive alternatives.</b> Gaia (English, generic), Maps.me/OsmAnd (offline but dumb), WhatsApp groups + a guide's tribal knowledge, or <i>nothing</i> — just follow a friend who "knows the dunes."</td></tr>
+          <tr><td class="strong num">2</td><td><b>Unique attributes.</b> AI planning · Arabic-first · desert/dune guidance · integrated safety/SOS + convoy tracking · one modern app instead of three clunky ones.</td></tr>
+          <tr><td class="strong num">3</td><td><b>Value delivered.</b> Plan a safe desert run in minutes, not hours of forum-digging; don't get lost or stranded with no signal; bring the family/club safely.</td></tr>
+          <tr><td class="strong num">4</td><td><b>Best-fit beachhead.</b> GCC weekend off-roaders &amp; 4x4 clubs — Saudi (Zulfi, Riyadh) and UAE (Liwa, Al Qudra). 25–45, premium SUV, social, safety-conscious, pays for apps.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="card reco avoid">
+        <span class="tag">5 · The category you win</span>
+        <h3 style="font-size:17px;line-height:1.15;margin-top:6px">The AI desert-adventure &amp; safety companion for the Gulf.</h3>
+        <p class="mut" style="margin:8px 0 0">Not "another trail app." Own a category the incumbents don't even contest — and you're first.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 06 WHITE SPACE ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">06</div>
+    <div class="htxt"><span class="kicker">White space</span><h2>Where to actually win.</h2></div>
+  </div>
+  <p class="lede">Two wedges, in order. One is an empty category you can own now; the other is a narrow worldwide entry for later.</p>
+  <div class="cols">
+    <div class="card avoid" style="border-top:3px solid var(--good)">
+      <span class="tag" style="color:var(--good)">Do this first</span>
+      <h3>MENA wedge</h3>
+      <p class="ln">No incumbent is <b>Arabic-first</b> or <b>desert-specialized</b> → an empty category is yours to own.</p>
+      <p class="ln"><b>Safety is the killer hook.</b> Desert = zero signal + real danger. Offline + SOS + convoy + check-in becomes the thing people are <i>very disappointed</i> to lose — your 40% test.</p>
+      <p class="ln"><b>Off-roading is social</b> in the Gulf (clubs, family outings) → group/convoy features create network effects the solo-hiker apps ignore.</p>
+    </div>
+    <div class="card avoid" style="border-top:3px solid var(--dune)">
+      <span class="tag" style="color:var(--dune)">Later</span>
+      <h3>Worldwide wedge</h3>
+      <p class="ln">AI planning + safety for the <b>overlanding</b> niche — where Gaia is bloated and AllTrails is hiking-only.</p>
+      <p class="ln">Enter narrow, not broad. A sharp niche you can defend beats a frontal assault on four entrenched players.</p>
+      <p class="ln mut">Sequence matters: worldwide only <i>after</i> MENA PMF is proven with the 40% test.</p>
+    </div>
+  </div>
+  <div class="quote">Own the empty category first. <b>Arabic-first, desert-specific, group-safety off-grid</b> — the one place the giants aren't looking.</div>
+</section>
+
+<!-- ════════ 07 CONCRETE MOVES ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">07</div>
+    <div class="htxt"><span class="kicker">"A gazillion times better than Gaia &amp; Wikiloc"</span><h2>Concrete moves.</h2></div>
+  </div>
+  <p class="lede">Ranked by impact-to-effort. The first three are the wedge; the rest widen the moat.</p>
+  <ol class="moves">
+    <li><b>Own desert safety.</b> Offline-first SOS with plus-codes, live location share, group/convoy tracking, "tell someone before you go" check-in, recovery-point intelligence, live <b>off-camber &amp; rollover-risk alerts</b> from the vehicle's tilt, and community <b>"heads-up" hazard waypoints</b> — soft drop-offs, sabkha/salt-bog, sharp rock, washouts, fence lines, camel crossings — kept trustworthy with community "still there?" confirms + expiry, and approved-marshal reports weighted highest. <span class="note">This is the "would die without it" feature Gaia &amp; Wikiloc simply don't have.</span></li>
+    <li><b>AI planning that's conditions-aware — and terrain-aware for beginners &amp; families.</b> "Plan me a 3-hour intermediate dune run near Liwa this weekend, family-safe, back before sunset" → real route + weather + difficulty + safety brief. Use terrain elevation to grade difficulty and steer first-timers and family campers to the gentlest option — low, firm, flat ground near access points. <span class="note"><b>Caveat:</b> raw elevation ≠ dune difficulty — public data (~30 m) misses individual dunes and dunes shift, so derive slope/ruggedness and blend with community difficulty tags, not elevation alone. Deterministic use of <b>known</b> terrain data — not the hazard "prediction" we deliberately avoid.<br/><br/><b>Data strategy:</b> ship a free <b>Copernicus GLO-30 (~30 m)</b> baseline for slope grading now and let community drives refine it — never promise centimetre-accurate dunes. How we <i>source, build and 3D-render</i> that terrain is a play in its own right — see §8.</span></li>
+    <li><b>Arabic-first + local.</b> Full RTL Arabic UI, local place names, SAR/AED pricing, local club partnerships. The incumbents treat Arabic as an afterthought.</li>
+    <li><b>Fix the thing Gaia users hate most: offline downloads.</b> Make offline bulletproof and obvious — Gaia's #1 review complaint. Beating them on <i>their</i> core feature is free credibility.</li>
+    <li><b>Desert/dune-specific intelligence</b> Gaia/Wikiloc lack: sand conditions, dune difficulty grading, tire-pressure guidance, sunset/heat windows. Let approved UAE club marshals contribute knowledge — text, voice, photo, video, guided Q&amp;A — as verified, trusted input. <span class="note"><b>Mechanism:</b> curate contributions into a searchable knowledge base the AI <b>retrieves</b> from, with marshal-verified entries weighted highest — not naive auto-fine-tuning, which invites hallucination. Process voice/photo/video async in the cloud. This "approved marshal" trust layer is both quality control <b>and</b> the community moat competitors can't copy.</span></li>
+    <li><b>Modern, fast, un-bloated UX</b> (your 4-theme system is already a brand asset) vs. Gaia's "buggy/bloated" reputation and Wikiloc's straight-line-track bugs.</li>
+    <li><b>Community with quality</b>, not Wikiloc's uneven dump — verified/curated local trails + your recorder turning real runs into trusted routes.</li>
+  </ol>
+</section>
+
+<!-- ════════ 08 DATA MOAT ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">08</div>
+    <div class="htxt"><span class="kicker">The data moat — living 3D terrain</span><h2>Map the desert as it's actually driven.</h2></div>
+  </div>
+  <p class="lede">Every recorded drive is a sensor pass. The recorder already logs position, altitude, speed &amp; heading every second — add the phone's barometer and motion sensors and each run also captures the <b>grade and camber</b> of the ground. Enough runs and you've mapped the terrain in 3D — and captured what no off-the-shelf elevation model can: <i>how it actually drives.</i></p>
+  <ol class="moves">
+    <li><b>Two signals, one mounted phone.</b> <b>Elevation:</b> GPS altitude is rough (±10–20 m); the <b>barometric altimeter</b> in most modern phones gives sub-metre <i>relative</i> precision → a clean up-and-down profile along the driven line. <b>Attitude:</b> the accelerometer + gyroscope give <b>pitch</b> (climb grade) and <b>roll</b> (off-camber), cleanest at steady speed with the two sensors fused and filtered to reject bumps and braking.</li>
+    <li><b>Calibrate once per mount, on level ground.</b> Phone fixed vertically in a holder → one "park on flat ground, tap to zero" step learns the mount angle; from then on <i>phone reading − zero = vehicle attitude</i>, no re-calibration unless it's re-seated. <span class="note"><b>On your questions:</b> the phone's own sensors <b>are</b> the spirit level — when still they read tilt to a fraction of a degree, better than a photo ever could, so don't gate calibration on a photo (keep it optional, as a marshal "here's my mount" trust shot). And no — without that zero the phone knows its <b>own</b> tilt vs gravity but not the <b>mount offset</b>, so it can't just assume it's level; the level-ground tap supplies the reference. It <i>can</i>, though, auto-detect a stationary, flat-looking moment and prompt <i>"looks flat — calibrate now?"</i></span></li>
+    <li><b>Seed with marshals &amp; advanced drivers first.</b> They'll actually follow the mount-and-calibrate protocol, so their runs become high-quality seed data — weighted highest via the same "approved marshal" trust layer. Widen to advanced drivers, then everyone; the crowd averages out noise over popular lines. One track is noisy — 500 passes over the same dune are accurate.</li>
+    <li><b>The payoff: a rotatable 3D relief of every trail.</b> The driven line draped over a terrain mesh, coloured by grade and camber — not a literal hologram, but a 3D model you can spin (it fits the 3D map you're already building). And off-camber angle doubles as a <b>live safety signal</b>: <i>"off-camber 22° ahead"</i> is a rollover warning no trail app has.</li>
+    <li><b>Buy a stable baseline; let the crowd keep the dunes fresh.</b> You're not drunk — hyper-detailed data exists. <span class="note"><b>Free (~30 m):</b> Copernicus GLO-30, SRTM, ALOS AW3D30 — fine for general relief now. <b>Commercial high-res:</b> Airbus <b>WorldDEM Neo (~5 m)</b> + Pléiades Neo imagery (~30 cm); <b>ALOS AW3D</b> (5 m → 0.5 m); Maxar WorldView (~30 cm); Intermap — sold per km², licence-restricted. <b>UAE-specific:</b> <b>Bayanat / Space42</b> and <b>MBRSC</b> (KhalifaSat) hold national high-res Earth-observation data — a purchase or partnership could seed the whole country and be a credibility/BD win. <b>The catch that makes crowd-refresh the moat:</b> dunes migrate metres a year, so a survey-grade <i>dune</i> map goes stale — buy high-res for the <b>stable</b> terrain (Hajar Mountains, wadis, rock trails) + a few flagship dune "playgrounds," and let phones continuously refresh the shifting sand.</span></li>
+  </ol>
+  <div class="quote">Don't pay to survey what the desert rewrites every season — <b>buy the mountains, crowdsource the sand.</b></div>
+</section>
+
+<!-- ════════ 09 PRICING ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">09</div>
+    <div class="htxt"><span class="kicker">Pricing recommendation</span><h2>Don't underprice the Gulf.</h2></div>
+  </div>
+  <p class="lede">The GCC tolerates premium pricing and off-roading is a group activity — so a family/convoy plan lifts ARPU above what solo-hiker apps ever reach. Sell on <i>safety</i>, not map count.</p>
+  <div class="cols avoid">
+    <div>
+      <div class="eyebrow">Directional tier structure (localize SAR/AED)</div>
+      <table>
+        <thead><tr><th>Tier</th><th class="r">Price</th><th>Gates</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Free</td><td class="r">$0</td><td class="mut">Discovery, browse, community uploads — seeds the trail DB (cold-start fix)</td></tr>
+          <tr class="hl"><td class="strong">Pro</td><td class="r">~$39–49/yr</td><td class="mut">Offline, SOS, AI planning, desert intelligence</td></tr>
+          <tr><td class="strong">Family / Convoy</td><td class="r">premium</td><td class="mut">Multi-vehicle live tracking, shared safety — higher ARPU</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="callout g"><span class="lb">Why a safety tier</span>Safety converts willingness-to-pay better than maps do. A "Safety" tier justifies a premium people will actually pay for — the map count never will.</div>
+      <p class="ln" style="font-size:9.5px"><b>Generous free tier</b> for discovery + community uploads, gate offline/SOS/AI behind paid. <b>Worldwide later:</b> match AllTrails/Gaia (~$35.99–39.99/yr) but sell on AI + safety, not layers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 10 RISKS ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">10</div>
+    <div class="htxt"><span class="kicker">Honest risks &amp; gaps</span><h2>Where incumbents still beat you.</h2></div>
+  </div>
+  <p class="lede">Everything above is a hypothesis until users prove it. Here's where you're genuinely exposed — and how to blunt each one.</p>
+  <table>
+    <thead><tr><th>Risk</th><th>Why it bites</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">Map-layer depth &amp; global scale</td><td class="mut">Gaia/Wikiloc/AllTrails have years of data you can't match early</td><td>Don't compete here — lean on AI + safety + local</td></tr>
+      <tr><td class="strong">Cold-start</td><td class="mut">A community app with no community is empty</td><td>Curated MENA trails + club seeding <i>before</i> opening UGC</td></tr>
+      <tr><td class="strong">Offline reliability is hard</td><td class="mut">But it's table-stakes in the desert</td><td>Budget real engineering — it's also your wedge vs Gaia</td></tr>
+      <tr class="hl"><td class="strong">PMF is still unproven</td><td class="mut">Everything here is a hypothesis</td><td>Validate with the 40% test before scaling spend</td></tr>
+    </tbody>
+  </table>
+  <div class="callout r"><span class="lb">The discipline</span>Resist the urge to go worldwide or build map-layer parity. Your only job right now is to make one MENA segment <i>very disappointed</i> to lose you.</div>
+</section>
+
+<!-- ════════ 11 90-DAY PLAN ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">11</div>
+    <div class="htxt"><span class="kicker">The 90-day plan — narrow, then measure</span><h2>Find PMF in one desert first.</h2></div>
+  </div>
+  <p class="lede">Depth over breadth. Pick one beachhead, make it undeniable there, run the number, and only then pour fuel on it.</p>
+
+  <div class="fig avoid">
+  <svg viewBox="0 0 720 250" width="100%" preserveAspectRatio="xMidYMid meet">
+    <!-- week guides -->
+    <g stroke="#EFE7D6" stroke-width="1">
+      <line x1="94" y1="34" x2="94" y2="234"/><line x1="202" y1="34" x2="202" y2="234"/>
+      <line x1="310" y1="34" x2="310" y2="234"/><line x1="418" y1="34" x2="418" y2="234"/>
+      <line x1="526" y1="34" x2="526" y2="234"/><line x1="634" y1="34" x2="634" y2="234"/>
+    </g>
+    <!-- week labels -->
+    <g font-family="Inter" font-size="8" fill="#8a7f69" text-anchor="middle">
+      <text x="94" y="26">Wk 1</text><text x="202" y="26">Wk 3</text><text x="310" y="26">Wk 5</text>
+      <text x="418" y="26">Wk 7</text><text x="526" y="26">Wk 9</text><text x="634" y="26">Wk 11</text>
+    </g>
+    <!-- bars: xOf(w)=40+w*54 -->
+    <g font-family="Inter" font-size="9.5" fill="#2b261d">
+      <text x="94" y="52">1 · Pick ONE beachhead + recruit 2–3 clubs</text>
+      <rect x="94" y="56" width="108" height="13" rx="3" fill="#6E5433"/>
+
+      <text x="148" y="90">2 · Harden offline · ship SOS/convoy · Arabic · AI "plan a run"</text>
+      <rect x="148" y="94" width="216" height="13" rx="3" fill="#C0611E"/>
+
+      <text x="256" y="128">3 · Get 50–100 real users on real trips · seed 30–50 trails</text>
+      <rect x="256" y="132" width="324" height="13" rx="3" fill="#A9781E"/>
+
+      <text x="472" y="166">4 · Run the Sean Ellis 40% survey</text>
+      <rect x="472" y="170" width="216" height="13" rx="3" fill="#3E6B4F"/>
+
+      <text x="94" y="212" fill="#8a7f69">5 · If ≥ 40% "very disappointed" → scale: Saudi (Zulfi/Riyadh), then overlanding worldwide</text>
+    </g>
+    <!-- after arrow -->
+    <line x1="688" y1="204" x2="712" y2="204" stroke="#2b261d" stroke-width="2"/>
+    <path d="M708,199 L718,204 L708,209 Z" fill="#2b261d"/>
+    <line x1="688" y1="34" x2="688" y2="216" stroke="#D6C9AE" stroke-dasharray="3 3"/>
+    <text x="684" y="230" font-family="Inter" font-size="8" fill="#8a7f69" text-anchor="end">day 90 → decision gate</text>
+  </svg>
+  <div class="figcap">Fig. 2 — Twelve weeks to a real PMF signal. The survey at day 90 is the gate: below 40%, iterate the wedge; at or above, scale.</div>
+  </div>
+  <div class="callout"><span class="lb">The gate</span>If &lt; 40% say "very disappointed," don't scale — interview the not-disappointed and sharpen the wedge. If ≥ 40% in MENA, <i>then</i> pour fuel on it.</div>
+</section>
+
+<!-- ════════ SOURCES ════════ -->
+<section class="opener">
+  <div class="head">
+    <div class="no">—</div>
+    <div class="htxt"><span class="kicker">Appendix</span><h2>Sources &amp; caveats.</h2></div>
+  </div>
+  <div class="foot" style="border-top:none;margin-top:0">
+    <p><b>Gaia GPS</b> — gaiagps.com/membership · help.gaiagps.com · Trustpilot &amp; App Store reviews · justuseapp.com</p>
+    <p><b>Wikiloc</b> — wikiloc.com/premium (16M users / 60M trails) · worldsapps.com · justuseapp.com · appgrooves.com</p>
+    <p><b>onX Offroad</b> — onxmaps.com/offroad/app/pricing &nbsp;·&nbsp; <b>AllTrails</b> — time.com (TIME100 2026) · similarweb.com/website/alltrails.com</p>
+    <p><b>Market sizing</b> — dataintelo.com · cognitivemarketresearch.com · verifiedmarketreports.com · kenresearch.com</p>
+    <p><b>MENA off-road culture</b> — thenationalnews.com · arabnews.com (Zulfi <i>tatees</i>) · hidmc.com (Liwa)</p>
+    <p><b>GCC penetration &amp; WTP</b> — GSMA Mobile Economy 2025 · RevenueCat State of Subscription Apps 2025</p>
+    <p><b>Elevation &amp; terrain data</b> — Copernicus GLO-30 (ESA) · SRTM (NASA) · ALOS AW3D30 / AW3D commercial (JAXA · RESTEC/NTT) · WorldDEM Neo &amp; Pléiades Neo (Airbus) · WorldView (Maxar) · Intermap · Bayanat / Space42 &amp; MBRSC KhalifaSat (UAE national EO)</p>
+    <p style="margin-top:10px;color:var(--dune)"><b>Caveat:</b> data current as of mid-2025–2026; competitor pricing and features change frequently. Re-verify before any go-to-market or fundraising use. Scores are fit-hypothesis judgments, not measured PMF — the 40% test is the only real proof.</p>
+  </div>
+</section>
+
+</body>
+</html>
