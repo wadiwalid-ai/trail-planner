@@ -1,0 +1,1 @@
+static-build/trail-planner.zip filter=lfs diff=lfs merge=lfs -text
