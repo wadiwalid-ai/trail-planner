@@ -35,13 +35,103 @@ export interface OfflineRegion {
   tileCount: number;
 }
 
+export type PackType = "area" | "corridor";
+export type TerrainKind = "dune" | "mountain" | "mixed";
+
+/** A predefined named region the user can download in one tap. */
+export interface RegionPreset {
+  id: string;
+  name: string;
+  description: string;
+  packType: PackType;
+  terrain: TerrainKind;
+  /** [west, south, east, north] in decimal degrees */
+  bounds: [number, number, number, number];
+  /** Recommended max zoom for this pack type (area packs use lower zoom; corridors use higher). */
+  recommendedMaxZoom: number;
+  /** Rough size label shown before download (based on playbook estimates). */
+  sizeLabel: string;
+}
+
+/**
+ * Pre-defined UAE off-road regions.
+ * Dune/sand areas → PackType "area" (full terrain polygon, wider bounds).
+ * Mountain/wadi areas → PackType "corridor" (tighter bounds, higher zoom for trail detail).
+ */
+export const UAE_REGION_PRESETS: RegionPreset[] = [
+  {
+    id: "liwa-empty-quarter",
+    name: "Liwa & Empty Quarter",
+    description: "Liwa oasis, Moreeb Dune & Rub' al Khali dune sea",
+    packType: "area",
+    terrain: "dune",
+    bounds: [53.2, 22.8, 55.0, 24.0],
+    recommendedMaxZoom: 14,
+    sizeLabel: "~120 MB",
+  },
+  {
+    id: "hajar-mountains",
+    name: "Hajar Mountains & Wadis",
+    description: "Wadi Shawka, Hatta, Wadi Bih & mountain trails",
+    packType: "corridor",
+    terrain: "mountain",
+    bounds: [55.7, 24.8, 56.5, 25.7],
+    recommendedMaxZoom: 15,
+    sizeLabel: "~80 MB",
+  },
+  {
+    id: "al-qudra-dubai-desert",
+    name: "Al Qudra & Dubai Desert",
+    description: "Al Qudra dunes, Al Marmoom & desert camps",
+    packType: "area",
+    terrain: "dune",
+    bounds: [55.1, 24.8, 55.5, 25.1],
+    recommendedMaxZoom: 14,
+    sizeLabel: "~45 MB",
+  },
+  {
+    id: "jebel-hafeet-al-ain",
+    name: "Jebel Hafeet & Al Ain",
+    description: "Jebel Hafeet summit road & Al Ain desert trails",
+    packType: "corridor",
+    terrain: "mountain",
+    bounds: [55.6, 23.9, 55.95, 24.25],
+    recommendedMaxZoom: 15,
+    sizeLabel: "~35 MB",
+  },
+  {
+    id: "uae-overview",
+    name: "UAE Overview",
+    description: "Full UAE — all regions, lower detail",
+    packType: "area",
+    terrain: "mixed",
+    bounds: [51.5, 22.5, 56.5, 26.2],
+    recommendedMaxZoom: 12,
+    sizeLabel: "~400 MB",
+  },
+];
+
+/** Convert [west, south, east, north] bounds to a MapRegion centre + delta. */
+export function boundsToRegion(bounds: [number, number, number, number]): MapRegion {
+  const [west, south, east, north] = bounds;
+  return {
+    latitude: (south + north) / 2,
+    longitude: (west + east) / 2,
+    latitudeDelta: north - south,
+    longitudeDelta: east - west,
+  };
+}
+
 export interface DownloadRegionOptions {
   name: string;
-  region: MapRegion;
+  /** Pass either region (centre + delta) or bounds directly. */
+  region?: MapRegion;
+  bounds?: [number, number, number, number];
   baseLayer: AdventureBaseLayer;
   minZoom?: number;
   maxZoom?: number;
   night?: boolean;
+  packType?: PackType;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -276,7 +366,10 @@ export async function downloadRegion(
 
   const minZoom = opts.minZoom ?? 10;
   const maxZoom = opts.maxZoom ?? 15;
-  const bounds = regionToBounds(opts.region);
+  // Accept either explicit bounds or a MapRegion centre+delta.
+  const bounds: [number, number, number, number] = opts.bounds
+    ? opts.bounds
+    : regionToBounds(opts.region ?? { latitude: 25.2, longitude: 55.3, latitudeDelta: 0.4, longitudeDelta: 0.4 });
   const style = buildMapStyle({
     baseLayer: opts.baseLayer,
     night: opts.night,
