@@ -165,6 +165,10 @@ export function buildMapStyle(opts: MapStyleOptions = {}): Record<string, unknow
   const style: Record<string, unknown> = {
     version: 8,
     name: night ? "Trail Planner Night" : "Trail Planner Topo",
+    // MapLibre v11 validates the presence of glyphs on startup and renders
+    // black without it — even for pure raster maps that never use text layers.
+    glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+    sprite: "https://demotiles.maplibre.org/style/osm-bright-gl-style/sprite",
     sources,
     layers,
   };
