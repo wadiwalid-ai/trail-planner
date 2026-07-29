@@ -24,7 +24,8 @@ import {
   type StyleSpecification,
   type ViewStateChangeEvent,
 } from "@maplibre/maplibre-react-native";
-import { buildMapStyle } from "@/constants/mapStyle";
+import Constants from "expo-constants";
+import { buildMapStyle, getMapTilerStyleUrl } from "@/constants/mapStyle";
 import {
   chooserIdsFromFeatures,
   maplibreCameraStop,
@@ -193,11 +194,16 @@ const AdventureMapMaplibre = forwardRef<AdventureMapHandle, AdventureMapProps>(
     const cameraRef = useRef<CameraRef>(null);
     const [styleReady, setStyleReady] = useState(false);
 
-    const mapStyle = useMemo(
-      () =>
-        buildMapStyle({ baseLayer, hillshade: true, terrain, night }) as unknown as StyleSpecification,
-      [baseLayer, terrain, night],
-    );
+    const mapStyle = useMemo((): StyleSpecification | string => {
+      // Use MapTiler hosted vector style when a key is available and not in night
+      // mode (night mode uses a custom raster tint that has no MapTiler equivalent).
+      const key = (Constants.expoConfig?.extra as Record<string, unknown> | undefined)
+        ?.mapTilerKey as string | null | undefined;
+      const vectorUrl = getMapTilerStyleUrl(baseLayer, key, night);
+      if (vectorUrl) return vectorUrl;
+      // Fallback: raster style (offline packs, night drive, no key).
+      return buildMapStyle({ baseLayer, hillshade: true, terrain, night }) as unknown as StyleSpecification;
+    }, [baseLayer, terrain, night]);
 
     const initialView = useMemo(() => {
       const r = initialRegion;
