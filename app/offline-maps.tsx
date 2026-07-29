@@ -18,7 +18,10 @@ import { useColors } from "@/hooks/useColors";
 import type { AdventureBaseLayer, MapRegion } from "@/components/adventureMapShared";
 import {
   OFFLINE_SUPPORTED,
+  UAE_REGION_PRESETS,
+  boundsToRegion,
   type OfflineRegion,
+  type RegionPreset,
   listRegions,
   downloadRegion,
   deleteRegion,
@@ -84,6 +87,9 @@ export default function OfflineMapsScreen() {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [bytesPerTile, setBytesPerTile] = useState(getBytesPerTile());
+  const [downloadingPresetId, setDownloadingPresetId] = useState<string | null>(null);
+  const [presetProgress, setPresetProgress] = useState(0);
+  const [presetError, setPresetError] = useState<string | null>(null);
 
   const bounds: [number, number, number, number] = [
     region.longitude - region.longitudeDelta / 2,
@@ -161,6 +167,33 @@ export default function OfflineMapsScreen() {
     }
 
     void runDownload();
+  };
+
+  const handlePresetDownload = async (preset: RegionPreset) => {
+    if (downloadingPresetId) return;
+    haptics.tapMedium();
+    setPresetError(null);
+    setDownloadingPresetId(preset.id);
+    setPresetProgress(0);
+    try {
+      await downloadRegion(
+        {
+          name: preset.name,
+          bounds: preset.bounds,
+          baseLayer,
+          minZoom: 9,
+          maxZoom: preset.recommendedMaxZoom,
+          packType: preset.packType,
+        },
+        (p) => setPresetProgress(p),
+        (msg) => setPresetError(msg),
+      );
+      await refresh();
+    } catch (e) {
+      setPresetError(e instanceof Error ? e.message : "Download failed");
+    } finally {
+      setDownloadingPresetId(null);
+    }
   };
 
   const handleDelete = async (r: OfflineRegion) => {
@@ -305,6 +338,75 @@ export default function OfflineMapsScreen() {
               </View>
             </GlassPanel>
 
+            {/* ── UAE Quick Downloads ── */}
+            <Text style={[styles.listHeading, { color: colors.text }]}>UAE Quick Downloads</Text>
+            <Text style={[styles.presetSubtitle, { color: colors.textMuted }]}>
+              One-tap packs for each region. Dune areas download the full terrain; mountain
+              trails download a tighter corridor with more detail.
+            </Text>
+            {presetError ? (
+              <Text style={[styles.errText, { color: colors.danger ?? "#C0392B" }]}>{presetError}</Text>
+            ) : null}
+            {UAE_REGION_PRESETS.map((preset) => {
+              const isDownloading = downloadingPresetId === preset.id;
+              const terrainIcon =
+                preset.terrain === "dune"
+                  ? "sunny-outline"
+                  : preset.terrain === "mountain"
+                    ? "triangle-outline"
+                    : "earth-outline";
+              const packLabel =
+                preset.packType === "area" ? "Dune Area Pack" : "Trail Corridor Pack";
+              const packColor = preset.packType === "area" ? "#D4763B" : "#27AE60";
+              return (
+                <GlassPanel key={preset.id} radius={colors.radiusLg} intensity={24}>
+                  <View style={styles.presetCard}>
+                    <View style={styles.presetTop}>
+                      <Ionicons name={terrainIcon as never} size={20} color={colors.accent} />
+                      <View style={{ flex: 1, marginLeft: 10 }}>
+                        <Text style={[styles.presetName, { color: colors.text }]}>{preset.name}</Text>
+                        <Text style={[styles.presetDesc, { color: colors.textMuted }]}>{preset.description}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.presetMeta}>
+                      <View style={[styles.packBadge, { backgroundColor: `${packColor}22`, borderColor: `${packColor}66` }]}>
+                        <Text style={[styles.packBadgeText, { color: packColor }]}>{packLabel}</Text>
+                      </View>
+                      <Text style={[styles.presetSize, { color: colors.textMuted }]}>{preset.sizeLabel}</Text>
+                    </View>
+                    {isDownloading ? (
+                      <View style={{ marginTop: 8 }}>
+                        <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
+                          <View
+                            style={[
+                              styles.progressFill,
+                              { backgroundColor: colors.accent, width: `${Math.min(100, presetProgress)}%` },
+                            ]}
+                          />
+                        </View>
+                        <Text style={[styles.presetDesc, { color: colors.textMuted, marginTop: 4 }]}>
+                          Downloading… {Math.round(presetProgress)}%
+                        </Text>
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => void handlePresetDownload(preset)}
+                        disabled={!!downloadingPresetId}
+                        activeOpacity={0.88}
+                        style={[
+                          styles.presetBtn,
+                          { backgroundColor: colors.accent, opacity: downloadingPresetId ? 0.5 : 1 },
+                        ]}
+                      >
+                        <Ionicons name="cloud-download-outline" size={15} color="#fff" />
+                        <Text style={styles.presetBtnText}>Download</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </GlassPanel>
+              );
+            })}
+
             {/* ── Saved regions ── */}
             <Text style={[styles.listHeading, { color: colors.text }]}>Saved regions</Text>
 
@@ -405,4 +507,18 @@ const styles = StyleSheet.create({
   regionMeta: { fontFamily: "Inter_400Regular", fontSize: 12, marginTop: 3 },
   progressTrack: { height: 4, borderRadius: 2, marginTop: 8, overflow: "hidden" },
   progressFill: { height: 4, borderRadius: 2 },
+  presetSubtitle: { fontFamily: "Inter_400Regular", fontSize: 12, lineHeight: 17, marginTop: -6, marginBottom: 6 },
+  presetCard: { padding: 14, gap: 10 },
+  presetTop: { flexDirection: "row", alignItems: "flex-start" },
+  presetName: { fontFamily: "Inter_600SemiBold", fontSize: 14 },
+  presetDesc: { fontFamily: "Inter_400Regular", fontSize: 12, marginTop: 2, lineHeight: 16 },
+  presetMeta: { flexDirection: "row", alignItems: "center", gap: 8 },
+  packBadge: { borderWidth: StyleSheet.hairlineWidth, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3 },
+  packBadgeText: { fontFamily: "Inter_600SemiBold", fontSize: 11 },
+  presetSize: { fontFamily: "Inter_500Medium", fontSize: 12 },
+  presetBtn: {
+    flexDirection: "row", alignItems: "center", justifyContent: "center",
+    gap: 6, paddingVertical: 10, borderRadius: 10,
+  },
+  presetBtnText: { color: "#fff", fontFamily: "Inter_700Bold", fontSize: 13 },
 });
