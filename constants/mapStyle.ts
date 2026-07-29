@@ -7,8 +7,11 @@ import { LEAFLET_TILES, type AdventureBaseLayer } from "@/components/adventureMa
  *  MapLibre GL style JSON, consumed by the MapLibre engine and by the offline
  *  region downloader (which serialises it for OfflineManager.createPack).
  *
- *  Every source is no-API-key and licensed for commercial use with attribution:
- *   - base raster: reuses LEAFLET_TILES (OpenTopoMap contours / Esri imagery …)
+ *  Tile sources:
+ *   - vector (online): MapTiler GL styles — sharp at every zoom, ~half the size
+ *     of raster. Requires MAPTILER_API_KEY injected via app.config.js extra.
+ *   - raster fallback: LEAFLET_TILES (OpenTopoMap / Esri) — used when no key,
+ *     for offline packs, and for night-drive mode (custom tinting).
  *   - DEM: AWS Terrain Tiles (terrarium encoding) → hillshade + 3D terrain
  * ────────────────────────────────────────────────────────────────────────── */
 
@@ -17,7 +20,42 @@ export const TERRARIUM_DEM_TILES =
   "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
 
 export const MAPLIBRE_ATTRIBUTION =
-  "© OpenTopoMap · Esri · AWS Terrain Tiles · © OpenStreetMap contributors";
+  "© MapTiler · © OpenStreetMap contributors · AWS Terrain Tiles";
+
+/* ──────────────────────────────────────────────────────────────────────────
+ *  MapTiler vector styles
+ *  Each entry is a hosted GL style URL served by MapTiler. The key is
+ *  injected at EAS build time from the MAPTILER_API_KEY secret (app.config.js).
+ *  Commercial use: free tier ≤ 100 k map loads/month; scales to self-hosted
+ *  Protomaps CDN at volume.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+/** MapTiler style IDs per base layer (non-satellite). */
+const MAPTILER_STYLE_IDS: Partial<Record<AdventureBaseLayer, string>> = {
+  topo: "outdoor-v2",      // Contours, hiking trails, terrain shading — best for off-road
+  terrain: "topo-v2",      // Detailed topo with relief shading
+  standard: "streets-v2",  // Road network with place labels
+  hybrid: "hybrid",        // Satellite imagery + vector labels
+  satellite: "satellite",  // Satellite imagery via MapTiler
+};
+
+/**
+ * Returns the MapTiler hosted style URL for a given layer and API key, or
+ * null when the layer has no vector equivalent or the key is absent.
+ *
+ * Night mode intentionally falls back to the raster builder (which applies a
+ * custom tint) because MapTiler's dark variants don't cover outdoor/topo.
+ */
+export function getMapTilerStyleUrl(
+  layer: AdventureBaseLayer,
+  key: string | null | undefined,
+  night = false,
+): string | null {
+  if (!key || night) return null;
+  const id = MAPTILER_STYLE_IDS[layer];
+  if (!id) return null;
+  return `https://api.maptiler.com/maps/${id}/style.json?key=${key}`;
+}
 
 export interface MapStyleOptions {
   baseLayer?: AdventureBaseLayer;
